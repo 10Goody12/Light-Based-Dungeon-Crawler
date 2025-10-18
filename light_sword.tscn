@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://be763vwsw412y"]
+
+[ext_resource type="Texture2D" uid="uid://cyljc5f3wdk0d" path="res://light_sword_test.png" id="1_fjwkt"]
+[ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://light_sword.gd" id="1_gwfeh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
+atlas = ExtResource("1_fjwkt")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gwfeh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lquwl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fjwkt"]
+radius = 4.0
+
+[node name="LightSword" type="Node2D" groups=["LightSword"]]
+script = ExtResource("1_gwfeh")
+
+[node name="LightSword" type="AnimatedSprite2D" parent="." groups=["LightSword"]]
+modulate = Color(1, 1, 1, 0.247059)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_gwfeh")
+
+[node name="CollisionHitbox" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionHitbox"]
+shape = SubResource("CircleShape2D_fjwkt")
+
+[connection signal="body_entered" from="CollisionHitbox" to="." method="_on_collision_hitbox_body_entered"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://di5tp45e4jtvh"]
+
+[ext_resource type="SpriteFrames" uid="uid://dskalcqfvsme3" path="res://bat_sprite_frames.tres" id="1_a2gey"]
+[ext_resource type="Script" uid="uid://bn8co1yywq88x" path="res://test_enemy.gd" id="1_oq7dc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oq7dc"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bt8rc"]
+radius = 6.0
+
+[node name="TestEenemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_oq7dc")
+enemy_speed = 60.0
+random_amplitude = 2.5
+
+[node name="CollisionHitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_oq7dc")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_bt8rc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_a2gey")
+animation = &"down"

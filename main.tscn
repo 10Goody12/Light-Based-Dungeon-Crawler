@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://buui0u2alvorg"]
+
+[ext_resource type="PackedScene" uid="uid://x2wy6arqyx80" path="res://map_test.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bo75o5ohak2e7" path="res://player.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://di5tp45e4jtvh" path="res://test_enemy.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://light_sword.tscn" id="4_1bvp3"]
+
+[node name="MAIN" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Map" parent="." instance=ExtResource("1_0xm2m")]
+z_index = -10
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("2_h2yge")]
+y_sort_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(5, 5)
+
+[node name="TestEenemy" parent="." instance=ExtResource("3_h2yge")]
+y_sort_enabled = true
+position = Vector2(75, -17)
+
+[node name="TestEenemy2" parent="." instance=ExtResource("3_h2yge")]
+y_sort_enabled = true
+position = Vector2(30, -77)
+
+[node name="TestEenemy3" parent="." instance=ExtResource("3_h2yge")]
+y_sort_enabled = true
+position = Vector2(74, -60)
+
+[node name="TestEenemy4" parent="." instance=ExtResource("3_h2yge")]
+y_sort_enabled = true
+position = Vector2(-44, -63)
+
+[node name="TestEenemy5" parent="." instance=ExtResource("3_h2yge")]
+y_sort_enabled = true
+position = Vector2(-85, -33)
+
+[node name="TestEenemy6" parent="." instance=ExtResource("3_h2yge")]
+y_sort_enabled = true
+position = Vector2(87, 43)
+
+[node name="LightSword" parent="." instance=ExtResource("4_1bvp3")]
