@@ -1,6 +1,6 @@
 extends Node2D
 
-@export_range(0, 2500, 0.1) var damage = 1
+@export_range(0, 2500, 0.1) var damage : float = 1.0
 @onready var light_sword = get_tree().get_first_node_in_group("LightSword")
 
 func _process(delta: float) -> void:

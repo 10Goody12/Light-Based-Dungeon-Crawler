@@ -13,7 +13,7 @@ class_name Enemy
 @onready var health : float = starting_health
 
 @export_category("Damage Behaviour")
-@export_range(1, 15, 1.0) var damage_cooldown = 5.0
+@export_range(1, 15, 1.0) var damage_cooldown = 0.5
 var damage_flicker_counter = 0.0
 
 @onready var player = get_tree().get_first_node_in_group("Player")
@@ -21,12 +21,15 @@ var damage_flicker_counter = 0.0
 @onready var body = $AnimatedSprite2D
 
 var was_damaged : bool = false
+var desired_direction_normalized
 
 func get_desired_direction():
 	#var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	var noise : Vector2 = Vector2(randf_range(-random_amplitude, random_amplitude), randf_range(-random_amplitude, random_amplitude))
 	var desired_dir = player.position - position + (slide_factor * velocity) + noise
+	desired_direction_normalized = desired_dir.normalized()
+	#print(desired_direction_normalized)
 	
 	velocity = velocity.lerp(desired_dir.normalized() * enemy_speed if desired_dir != Vector2.ZERO else Vector2.ZERO, 0.1)
 
@@ -34,7 +37,6 @@ func check_health():
 	if health <= 0:
 		body.visible = false
 		queue_free()
-
 
 func inflict_damage(in_damage):
 	if was_damaged == false:
@@ -46,29 +48,51 @@ func inflict_damage(in_damage):
 		blood_particles.position = self.position
 		get_tree().root.add_child(blood_particles)
 		
-		#print("Blood particles position: ", blood_particles.global_position, "\nEnemy position: ", self.global_position, "\n")
+		#print("test 1")
+		var damage_counter_scene: PackedScene = load("res://Scenes/damage_counter.tscn")
+		var damage_counter = damage_counter_scene.instantiate()
+		damage_counter.initialize(in_damage, 10, 0.01, 1.5, 12, 1.0, Color.RED, self.global_position)
+		get_tree().root.add_child(damage_counter)
 		
 		Sound.play_random_hit()
 
 func adjust_flicker():
 	if was_damaged:
-		modulate = Color.DARK_RED
+		modulate = Color.RED
 	else:
 		modulate = modulate.lerp(Color.WHITE, 1 / damage_cooldown)
+
+func play_correct_animation():
+	var tan_num = atan2(desired_direction_normalized[0], desired_direction_normalized[1])
+		
+	if tan_num >= -PI/4 and tan_num <= PI/4:
+		#print("GOING DOWN")
+		body.play("down")
+	elif tan_num >= PI/4 and tan_num <= 3*PI/4:
+		#print("GOING RIGHT")
+		body.play("right")
+	elif tan_num >= 3*PI/4 or tan_num <= -3*PI/4:
+		#print("GOING UP")
+		body.play("up")
+	elif tan_num >= -3*PI/4 and tan_num <= -PI/4:
+		#print("GOING LEFT")
+		body.play("left")
 
 ####
 
 func _process(delta: float) -> void:
-	if damage_flicker_counter == damage_cooldown:
-		was_damaged = false
-	
 	if was_damaged:
-		damage_flicker_counter += 1
+		damage_flicker_counter += delta
+		modulate = Color.RED
+
+		if damage_flicker_counter >= damage_cooldown:
+			was_damaged = false
+			damage_flicker_counter = 0
 	else:
-		damage_flicker_counter = 0
+		modulate = modulate.lerp(Color.WHITE, delta * 5.0)
 	
 	check_health()
-	adjust_flicker()
+	#adjust_flicker()
 	
 
 func _physics_process(delta):
@@ -79,3 +103,4 @@ func _physics_process(delta):
 	
 	if can_move:
 		move_and_slide()
+		play_correct_animation()

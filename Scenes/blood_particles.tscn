@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://baigpc84tvoo8" path="res://Scripts/blood_particles.gd" id="1_8044i"]
 
 [node name="BloodParticles" type="CPUParticles2D"]
-modulate = Color(0.535857, 0.0178005, 0.00987224, 1)
-self_modulate = Color(0.537255, 0.0196078, 0.0117647, 1)
+modulate = Color(1, 0, 0, 1)
+self_modulate = Color(1, 0, 0, 1)
 z_index = 1
 emitting = false
 amount = 200

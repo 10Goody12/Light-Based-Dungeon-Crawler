@@ -11,38 +11,36 @@ y_sort_enabled = true
 
 [node name="Map" parent="." instance=ExtResource("1_jjvhh")]
 z_index = -10
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="." groups=["Player"] instance=ExtResource("2_kry3j")]
 y_sort_enabled = true
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" groups=["Camera"]]
 zoom = Vector2(5, 5)
 
 [node name="TestEenemy" parent="." instance=ExtResource("3_21xkr")]
 y_sort_enabled = true
 position = Vector2(75, -17)
 
-[node name="TestEenemy2" parent="." instance=ExtResource("3_21xkr")]
-y_sort_enabled = true
-position = Vector2(30, -77)
-
-[node name="TestEenemy3" parent="." instance=ExtResource("3_21xkr")]
-y_sort_enabled = true
-position = Vector2(74, -60)
-
-[node name="TestEenemy4" parent="." instance=ExtResource("3_21xkr")]
-y_sort_enabled = true
-position = Vector2(-44, -63)
-
-[node name="TestEenemy5" parent="." instance=ExtResource("3_21xkr")]
-y_sort_enabled = true
-position = Vector2(-85, -33)
-
-[node name="TestEenemy6" parent="." instance=ExtResource("3_21xkr")]
-y_sort_enabled = true
-position = Vector2(87, 43)
-
 [node name="LightSword" parent="." instance=ExtResource("4_6bp64")]
+metadata/_edit_lock_ = true
 
 [node name="BloodParticles" parent="." instance=ExtResource("5_kry3j")]
 position = Vector2(28.64, 0)
+
+[node name="TestEenemy2" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(9, -51)
+
+[node name="TestEenemy3" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(34, 55)
+
+[node name="TestEenemy4" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(-71, -21)
+
+[node name="TestEenemy5" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(-74, 21)
