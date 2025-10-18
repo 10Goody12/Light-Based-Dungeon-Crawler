@@ -28,3 +28,25 @@ shape = SubResource("CircleShape2D_bt8rc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_a2gey")
 animation = &"down"
+
+[node name="BloodParticles" type="CPUParticles2D" parent="."]
+modulate = Color(0.535857, 0.0178005, 0.00987224, 1)
+emitting = false
+amount = 200
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+randomness = 0.37
+draw_order = 1
+emission_shape = 1
+emission_sphere_radius = 3.0
+direction = Vector2(0, -10)
+spread = 25.0
+gravity = Vector2(0, 600)
+initial_velocity_min = 100.0
+initial_velocity_max = 250.0
+damping_min = 200.0
+damping_max = 200.0
+scale_amount_min = 0.25
+hue_variation_min = -0.5
+hue_variation_max = 0.5

@@ -11,11 +11,13 @@ class_name Enemy
 @export_range(1, 250, 1) var starting_health : float = 10.0
 @onready var health : float = starting_health
 
-@onready var player = get_tree().get_first_node_in_group("Player")
-
 @export_category("Damage Behaviour")
 @export_range(1, 15, 1.0) var damage_cooldown = 5.0
 var damage_flicker_counter = 0.0
+
+@onready var player = get_tree().get_first_node_in_group("Player")
+@onready var blood = $BloodParticles
+@onready var body = $AnimatedSprite2D
 
 var was_damaged : bool = false
 
@@ -29,13 +31,17 @@ func get_desired_direction():
 
 func check_health():
 	if health <= 0:
-		queue_free()
+		body.visible = false
+		if blood.emitting == false:
+			queue_free()
+
 
 func inflict_damage(in_damage):
 	if was_damaged == false:
 		health -= in_damage
 		was_damaged = true
-		
+		blood.emitting = true
+
 func adjust_flicker():
 	if was_damaged:
 		modulate = Color.DARK_RED
