@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyljc5f3wdk0d"
-path="res://.godot/imported/light_sword_test.png-399e37dd2aa39ac287a6c0dafc331f4f.ctex"
+uid="uid://ix7cks3ls28p"
+path="res://.godot/imported/tilemap_cave_test.png-b13496437204cd36b325737faa327ead.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://light_sword_test.png"
-dest_files=["res://.godot/imported/light_sword_test.png-399e37dd2aa39ac287a6c0dafc331f4f.ctex"]
+source_file="res://GFX/tilemap_cave_test.png"
+dest_files=["res://.godot/imported/tilemap_cave_test.png-b13496437204cd36b325737faa327ead.ctex"]
 
 [params]
 

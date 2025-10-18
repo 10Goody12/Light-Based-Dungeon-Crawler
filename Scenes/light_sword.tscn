@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://be763vwsw412y"]
 
-[ext_resource type="Texture2D" uid="uid://cyljc5f3wdk0d" path="res://light_sword_test.png" id="1_fjwkt"]
-[ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://light_sword.gd" id="1_gwfeh"]
+[ext_resource type="Texture2D" uid="uid://cyljc5f3wdk0d" path="res://GFX/light_sword_test.png" id="1_fjwkt"]
+[ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://Scripts/light_sword.gd" id="1_gwfeh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lquwl"]
 atlas = ExtResource("1_fjwkt")
@@ -25,6 +25,7 @@ radius = 4.0
 script = ExtResource("1_gwfeh")
 
 [node name="LightSword" type="AnimatedSprite2D" parent="." groups=["LightSword"]]
+visible = false
 modulate = Color(1, 1, 1, 0.247059)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_gwfeh")

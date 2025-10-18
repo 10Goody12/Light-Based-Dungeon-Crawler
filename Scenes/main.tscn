@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://buui0u2alvorg"]
+
+[ext_resource type="PackedScene" uid="uid://x2wy6arqyx80" path="res://Scenes/map_test.tscn" id="1_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://bo75o5ohak2e7" path="res://Scenes/player.tscn" id="2_kry3j"]
+[ext_resource type="PackedScene" uid="uid://di5tp45e4jtvh" path="res://Scenes/test_enemy.tscn" id="3_21xkr"]
+[ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://Scenes/light_sword.tscn" id="4_6bp64"]
+[ext_resource type="PackedScene" uid="uid://dvw8o0lpiy8ki" path="res://Scenes/blood_particles.tscn" id="5_kry3j"]
+
+[node name="MAIN" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Map" parent="." instance=ExtResource("1_jjvhh")]
+z_index = -10
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("2_kry3j")]
+y_sort_enabled = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(5, 5)
+
+[node name="TestEenemy" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(75, -17)
+
+[node name="TestEenemy2" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(30, -77)
+
+[node name="TestEenemy3" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(74, -60)
+
+[node name="TestEenemy4" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(-44, -63)
+
+[node name="TestEenemy5" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(-85, -33)
+
+[node name="TestEenemy6" parent="." instance=ExtResource("3_21xkr")]
+y_sort_enabled = true
+position = Vector2(87, 43)
+
+[node name="LightSword" parent="." instance=ExtResource("4_6bp64")]
+
+[node name="BloodParticles" parent="." instance=ExtResource("5_kry3j")]
+position = Vector2(28.64, 0)
