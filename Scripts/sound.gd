@@ -19,16 +19,17 @@ func load_hit_sounds(folder_path):
 	else:
 		print("Failed to open directory: ", folder_path)
 
-func play(file_path):
+func play(file_path, decibel_diff):
 	var player = AudioStreamPlayer.new()
 	player.stream = load(file_path)
 	player.finished.connect(func(): player.queue_free())
 	add_child(player)
+	player.volume_db -= decibel_diff
 	player.play()
 
 func play_random_hit():
 	if hit_sound_names.size() > 0:
 		var random_file = hit_sound_names.pick_random()
-		play(random_file)
+		play(random_file, 30)
 	else:
 		print("No hit sounds found to play!")

@@ -44,14 +44,14 @@ func _ready() -> void:
 	if float(damage_dealt) == int(damage_dealt):
 		var damage_dealt_as_int = int(damage_dealt)
 		damage_dealt = damage_dealt_as_int
-		print("Damage dealt: ", damage_dealt, "\nDamage as int: ", int(damage_dealt))
+		#print("Damage dealt: ", damage_dealt, "\nDamage as int: ", int(damage_dealt))
 	
 	counter_text = str(damage_dealt)
 	label.text = counter_text_prefix + counter_text + counter_text_suffix
 	label.add_theme_font_size_override("normal_font_size", font_size)
 	label.add_theme_color_override("default_color", label_colour)
 	float_counter = 0.0
-	print("Damage Counter spawned: ", str(self))
+	#print("Damage Counter spawned: ", str(self))
 	
 
 func _process(delta: float) -> void:
