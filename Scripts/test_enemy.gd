@@ -59,8 +59,11 @@ func inflict_damage(in_damage):
 func adjust_flicker():
 	if was_damaged:
 		modulate = Color.RED
+		modulate.a = 0.5
+		print("test")
 	else:
 		modulate = modulate.lerp(Color.WHITE, 1 / damage_cooldown)
+		modulate.a += 1 / damage_cooldown
 
 func play_correct_animation():
 	var tan_num = atan2(desired_direction_normalized[0], desired_direction_normalized[1])
@@ -80,16 +83,22 @@ func play_correct_animation():
 
 ####
 
+func _ready() -> void:
+	push_warning("Damage flickering augmented with halved alpha for damaged enemies. It was thought that doing this would A) let the player know which mobs had been attacked more clearly, and B) it was theorized to be useful when fighting many many mobs, potentially making it easier to know when you've missed a mob, or 'missed a spot.' Reconsider in future.")
+
+
 func _process(delta: float) -> void:
 	if was_damaged:
 		damage_flicker_counter += delta
 		modulate = Color.RED
+		modulate.a = 0.5
 
 		if damage_flicker_counter >= damage_cooldown:
 			was_damaged = false
 			damage_flicker_counter = 0
 	else:
 		modulate = modulate.lerp(Color.WHITE, delta * 5.0)
+		modulate.a += 1 / damage_cooldown
 	
 	check_health()
 	#adjust_flicker()

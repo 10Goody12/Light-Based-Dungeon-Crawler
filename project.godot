@@ -25,6 +25,7 @@ Sound="*res://Scripts/sound.gd"
 Player=""
 LightSword=""
 Camera=""
+CursorTrail=""
 
 [input]
 

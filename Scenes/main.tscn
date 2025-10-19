@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://buui0u2alvorg"]
+[gd_scene load_steps=7 format=3 uid="uid://buui0u2alvorg"]
 
 [ext_resource type="PackedScene" uid="uid://x2wy6arqyx80" path="res://Scenes/map_test.tscn" id="1_jjvhh"]
 [ext_resource type="PackedScene" uid="uid://bo75o5ohak2e7" path="res://Scenes/player.tscn" id="2_kry3j"]
 [ext_resource type="PackedScene" uid="uid://di5tp45e4jtvh" path="res://Scenes/test_enemy.tscn" id="3_21xkr"]
 [ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://Scenes/light_sword.tscn" id="4_6bp64"]
-[ext_resource type="PackedScene" uid="uid://dvw8o0lpiy8ki" path="res://Scenes/blood_particles.tscn" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://cursor_trail.tscn" id="5_kry3j"]
+
+[sub_resource type="Curve" id="Curve_kry3j"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.651685), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="MAIN" type="Node2D"]
 y_sort_enabled = true
@@ -26,9 +30,6 @@ position = Vector2(75, -17)
 [node name="LightSword" parent="." instance=ExtResource("4_6bp64")]
 metadata/_edit_lock_ = true
 
-[node name="BloodParticles" parent="." instance=ExtResource("5_kry3j")]
-position = Vector2(28.64, 0)
-
 [node name="TestEenemy2" parent="." instance=ExtResource("3_21xkr")]
 y_sort_enabled = true
 position = Vector2(9, -51)
@@ -44,3 +45,10 @@ position = Vector2(-71, -21)
 [node name="TestEenemy5" parent="." instance=ExtResource("3_21xkr")]
 y_sort_enabled = true
 position = Vector2(-74, 21)
+
+[node name="CursorTrail" parent="." groups=["CursorTrail"] instance=ExtResource("5_kry3j")]
+width = 2.0
+width_curve = SubResource("Curve_kry3j")
+begin_cap_mode = 2
+end_cap_mode = 2
+max_line_points = 5

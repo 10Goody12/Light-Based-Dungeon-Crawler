@@ -1,10 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://be763vwsw412y"]
+[gd_scene load_steps=8 format=3 uid="uid://be763vwsw412y"]
 
 [ext_resource type="Texture2D" uid="uid://cyljc5f3wdk0d" path="res://GFX/light_sword_test.png" id="1_fjwkt"]
 [ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://Scripts/light_sword.gd" id="1_gwfeh"]
-[ext_resource type="Shader" uid="uid://bs8cfny2qwblj" path="res://Scenes/light_sword.gdshader" id="3_1jnj3"]
-[ext_resource type="Script" uid="uid://cvxfx8xfrih2u" path="res://Scenes/cpu_particles_2d.gd" id="4_arakq"]
-[ext_resource type="Texture2D" uid="uid://8uyn8tahdk46" path="res://GFX/sword_sprite_3.png" id="4_cbbyl"]
 
 [sub_resource type="Gradient" id="Gradient_7n8p5"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -33,18 +30,6 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjwkt"]
 radius = 4.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_arakq"]
-shader = ExtResource("3_1jnj3")
-shader_parameter/cursor_speed = 0.0
-shader_parameter/hue_shift_speed = 1.5
-shader_parameter/trail_hue_scale = 0.002
-shader_parameter/stretch_factor = 2.0
-shader_parameter/fade_power = 2.0
-shader_parameter/brightness = 1.0
-shader_parameter/saturation = 1.0
-shader_parameter/base_stretch = 1.5
-shader_parameter/max_extra_stretch = 3.0
 
 [node name="LightSword" type="Node2D" groups=["LightSword"]]
 script = ExtResource("1_gwfeh")
@@ -76,27 +61,4 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionHitbox"]
 shape = SubResource("CircleShape2D_fjwkt")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_arakq")
-scale = Vector2(0.1, 0.1)
-amount = 1000
-texture = ExtResource("4_cbbyl")
-lifetime = 20.0
-speed_scale = 64.0
-fixed_fps = 60
-particle_flag_align_y = true
-direction = Vector2(0, -0.01)
-spread = 0.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 0.1
-initial_velocity_max = 0.1
-angle_min = -360.0
-angle_max = 360.0
-split_scale = true
-scale_curve_x = null
-scale_curve_y = null
-script = ExtResource("4_arakq")
-
-[connection signal="per_process" from="." to="CPUParticles2D" method="_on_light_sword_per_process"]
 [connection signal="body_entered" from="CollisionHitbox" to="." method="_on_collision_hitbox_body_entered"]
