@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://di5tp45e4jtvh"]
 
-[ext_resource type="SpriteFrames" uid="uid://dskalcqfvsme3" path="res://Resources/bat_sprite_frames.tres" id="1_a2gey"]
+[ext_resource type="SpriteFrames" uid="uid://dskalcqfvsme3" path="res://Resources/Spritesheets/bat_sprite_frames.tres" id="1_a2gey"]
 [ext_resource type="Script" uid="uid://bn8co1yywq88x" path="res://Scripts/test_enemy.gd" id="1_oq7dc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_oq7dc"]
@@ -21,6 +21,10 @@ motion_mode = 1
 script = ExtResource("1_oq7dc")
 enemy_speed = 60.0
 random_amplitude = 2.5
+has_proximity_aggro = true
+aggro_range = 7.0
+min_damage = 2.0
+max_damage = 5.0
 
 [node name="CollisionHitbox" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_oq7dc")

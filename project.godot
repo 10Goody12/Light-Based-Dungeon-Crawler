@@ -23,6 +23,7 @@ Sound="*res://Scripts/sound.gd"
 [file_customization]
 
 folder_colors={
+"res://Archive/": "gray",
 "res://GFX/": "red",
 "res://MapChunks/": "orange",
 "res://Resources/": "yellow",
@@ -36,8 +37,10 @@ folder_colors={
 Player=""
 Camera=""
 CursorTrail=""
-LightSparkle=""
 CursorLight=""
+CursorStar=""
+CursorSparkles=""
+Healthbar=""
 
 [input]
 

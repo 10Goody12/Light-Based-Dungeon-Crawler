@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvw8o0lpiy8ki"]
 
-[ext_resource type="Script" uid="uid://baigpc84tvoo8" path="res://Scripts/blood_particles.gd" id="1_8044i"]
+[ext_resource type="Script" uid="uid://baigpc84tvoo8" path="res://Scripts/blood_particles.gd" id="1_ifqs5"]
 
 [node name="BloodParticles" type="CPUParticles2D"]
 modulate = Color(1, 0, 0, 1)
@@ -25,6 +25,6 @@ damping_max = 200.0
 scale_amount_min = 0.25
 hue_variation_min = -0.5
 hue_variation_max = 0.5
-script = ExtResource("1_8044i")
+script = ExtResource("1_ifqs5")
 
 [connection signal="finished" from="." to="." method="_on_finished"]

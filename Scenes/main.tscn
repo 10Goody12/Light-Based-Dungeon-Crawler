@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://buui0u2alvorg"]
+[gd_scene load_steps=9 format=3 uid="uid://buui0u2alvorg"]
 
+[ext_resource type="PackedScene" uid="uid://03mje5tgwt70" path="res://Scenes/GUI/gui.tscn" id="1_21xkr"]
 [ext_resource type="PackedScene" uid="uid://bo75o5ohak2e7" path="res://Scenes/player.tscn" id="2_kry3j"]
 [ext_resource type="PackedScene" uid="uid://di5tp45e4jtvh" path="res://Scenes/test_enemy.tscn" id="3_21xkr"]
-[ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://Scenes/light_sword.tscn" id="4_6bp64"]
-[ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/cursor_trail.tscn" id="5_kry3j"]
+[ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://Scenes/CursorCombat/light_sword.tscn" id="4_6bp64"]
+[ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/CursorCombat/cursor_trail.tscn" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://b0krc5mdf61qj" path="res://MapChunks/StartAreas/start_map_1.tscn" id="6_21xkr"]
 
 [sub_resource type="Curve" id="Curve_kry3j"]
@@ -16,6 +17,8 @@ colors = PackedColorArray(100, 0, 0, 1, 0.887904, 0.510854, 0.0715154, 1, 1, 0.8
 
 [node name="MAIN" type="Node2D"]
 y_sort_enabled = true
+
+[node name="GUI" parent="." instance=ExtResource("1_21xkr")]
 
 [node name="Start_Map_1" parent="." instance=ExtResource("6_21xkr")]
 metadata/_edit_lock_ = true
@@ -69,3 +72,4 @@ position = Vector2(-60, 79)
 [node name="TestEenemy6" parent="." instance=ExtResource("3_21xkr")]
 y_sort_enabled = true
 position = Vector2(148, -25)
+can_move = false

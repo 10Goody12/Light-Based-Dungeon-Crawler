@@ -2,17 +2,26 @@ extends CharacterBody2D
 
 class_name Enemy
 
-@export_category("Movement")
+enum AggroState { PASSIVE, HOSTILE, PEACEFUL }
+
+@export_category("Movement Behaviour")
 @export var can_move : bool = true
 @export_range(1, 200, 0.1) var enemy_speed : float = 20
 @export_range(0, 1, 0.025) var slide_factor : float = 0.15
 @export_range(-25, 25, 0.1) var random_amplitude : float = 5.0
+
+@export_category("Player Response")
+@export var has_proximity_aggro : bool = false ## Whether or not this creature needs to be prompted into aggression through proximity.
+@export var aggro_range : float = INF ## The range for the proximity aggro. Measured in cells (16x).
+@export var default_state: AggroState
 
 @export_category("Biology")
 @export_range(1, 250, 1) var starting_health : float = 10.0
 @onready var health : float = starting_health
 
 @export_category("Damage Behaviour")
+@export var min_damage : float
+@export var max_damage : float
 @export_range(1, 15, 1.0) var damage_cooldown = 0.5
 var damage_flicker_counter = 0.0
 
@@ -43,18 +52,23 @@ func inflict_damage(in_damage):
 		health -= in_damage
 		was_damaged = true
 		
-		var blood_scene: PackedScene = load("res://Scenes/blood_particles.tscn")
+		var blood_scene: PackedScene = load("res://Scenes/CursorCombat/blood_particles.tscn")
 		var blood_particles = blood_scene.instantiate()
 		blood_particles.position = self.position
 		get_tree().root.add_child(blood_particles)
 		
 		#print("test 1")
-		var damage_counter_scene: PackedScene = load("res://Scenes/damage_counter.tscn")
+		var damage_counter_scene: PackedScene = load("res://Scenes/CursorCombat/damage_counter.tscn")
 		var damage_counter = damage_counter_scene.instantiate()
 		damage_counter.initialize(in_damage, 10, 0.01, 1.5, 12, 1.0, Color.RED, self.global_position)
 		get_tree().root.add_child(damage_counter)
 		
 		Sound.play_random_hit()
+
+func get_damage():
+	var out_damage = randf_range(min_damage, max_damage)
+	print("Enemy dealt ", out_damage, " points of damage!")
+	return out_damage
 
 func adjust_flicker():
 	if was_damaged:
@@ -105,11 +119,15 @@ func _process(delta: float) -> void:
 	
 
 func _physics_process(delta):
-	#if is_frozen:
-		#return
-	
 	get_desired_direction()
 	
+	if has_proximity_aggro:
+		can_move = false
+		if (position - player.position).length() <= (aggro_range * 16):
+			can_move = true
+			has_proximity_aggro = false
+			
 	if can_move:
 		move_and_slide()
-		play_correct_animation()
+	
+	play_correct_animation()

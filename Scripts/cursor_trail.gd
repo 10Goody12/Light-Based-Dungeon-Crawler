@@ -5,6 +5,7 @@ class_name CursorTrail
 @export var max_line_points : int
 var time_left : float
 var max_lifetime
+var is_sparkling : bool = false
 
 #func set_time_left(in_time):
 	#time_left = in_time
@@ -12,6 +13,9 @@ var max_lifetime
 
 func set_max_line_points(in_num):
 	max_line_points = in_num
+
+func set_is_sparkling(in_bool):
+	is_sparkling = in_bool
 
 func _process(delta: float) -> void:
 	#var alpha_per_second = 255 / max_lifetime

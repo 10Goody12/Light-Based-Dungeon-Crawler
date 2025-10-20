@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsvxpdu6g517f"]
 
-[ext_resource type="Script" uid="uid://c3ekjgvl5181" path="res://Scripts/damage_counter.gd" id="1_ok317"]
+[ext_resource type="Script" uid="uid://c3ekjgvl5181" path="res://Scripts/damage_counter.gd" id="1_8b5dl"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f4ffs"]
 blend_mode = 1
@@ -12,7 +12,7 @@ light_mask = 2
 visibility_layer = 2
 z_index = 20
 z_as_relative = false
-script = ExtResource("1_ok317")
+script = ExtResource("1_8b5dl")
 font_size_decay = 5.0
 
 [node name="Container" type="Control" parent="."]

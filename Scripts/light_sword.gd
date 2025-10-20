@@ -1,11 +1,11 @@
 extends Node2D
 
 @export_range(0, 2500, 0.1) var damage : float = 1.0
-@onready var sparkle = get_tree().get_first_node_in_group("LightSparkle")
-@onready var sparkle2 = get_tree().get_nodes_in_group("LightSparkle")[1]
+@onready var sparkles = get_tree().get_first_node_in_group("CursorSparkles")
+@onready var star = get_tree().get_nodes_in_group("CursorStar")[0]
+@onready var star_2 = get_tree().get_nodes_in_group("CursorStar")[1]
 @onready var light = get_tree().get_first_node_in_group("CursorLight")
 @onready var trail = get_tree().get_first_node_in_group("CursorTrail")
-@onready var particles
 
 var last_pos = Vector2(0,0)
 
@@ -38,7 +38,7 @@ func get_cursor_move_data(delta: float):
 	#new_line.end_cap_mode = Line2D.LINE_CAP_ROUND
 	##new_line.set_time_left(in_lifetime)
 
-func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, max_points : int = TYPE_NIL):	
+func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkling : bool = false, max_points : int = TYPE_NIL):	
 	trail.add_point(in_end)
 	trail.width = in_width
 	if max_points != TYPE_NIL:
@@ -51,10 +51,15 @@ func _process(delta: float) -> void:
 	position = get_global_mouse_position()
 	
 	#draw_line_from_to(last_pos, position, 100.0, 1.0)
-	draw_trail(position, 5, true, 50)
-	sparkle.scale = (Vector2(data[0], data[0]) / 500) * sparkle.scale_factor
-	sparkle2.scale = (Vector2(data[0], data[0]) / 500) * sparkle2.scale_factor
+	draw_trail(position, 5, true, true, 50)
+	star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor
+	star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
 	light.energy = data[0] / 500
+	
+	if data[0] <= 1:
+		sparkles.emitting = false
+	else:
+		sparkles.emitting = true
 
 	last_pos = position
 
