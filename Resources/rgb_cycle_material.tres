@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://3t8i7uv58fta"]
+
+[ext_resource type="Shader" uid="uid://b1q55mko1f12u" path="res://Resources/Shaders/rgb_cycle.gdshader" id="1_1rsp2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_1rsp2")

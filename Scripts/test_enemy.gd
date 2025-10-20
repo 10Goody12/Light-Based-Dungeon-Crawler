@@ -47,7 +47,7 @@ func check_health():
 		body.visible = false
 		queue_free()
 
-func inflict_damage(in_damage):
+func inflict_damage(in_damage, was_crit):
 	if was_damaged == false:
 		health -= in_damage
 		was_damaged = true
@@ -60,14 +60,15 @@ func inflict_damage(in_damage):
 		#print("test 1")
 		var damage_counter_scene: PackedScene = load("res://Scenes/CursorCombat/damage_counter.tscn")
 		var damage_counter = damage_counter_scene.instantiate()
-		damage_counter.initialize(in_damage, 10, 0.01, 1.5, 12, 1.0, Color.RED, self.global_position)
+		
+		damage_counter.initialize(in_damage, 10, 0.01, 1.5, 12, 1.0, Color.RED, self.global_position, was_crit)
 		get_tree().root.add_child(damage_counter)
 		
 		Sound.play_random_hit()
 
 func get_damage():
 	var out_damage = randf_range(min_damage, max_damage)
-	print("Enemy dealt ", out_damage, " points of damage!")
+	#print("Enemy dealt ", out_damage, " points of damage!")
 	return out_damage
 
 func adjust_flicker():

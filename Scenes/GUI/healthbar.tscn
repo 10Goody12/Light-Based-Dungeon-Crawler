@@ -1,13 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://dxy70blrnplao"]
+[gd_scene load_steps=12 format=3 uid="uid://dxy70blrnplao"]
 
 [ext_resource type="Texture2D" uid="uid://dv1bdkawr8ipe" path="res://GFX/GUI/9PR_satchel_pane.png" id="1_nhxoe"]
-[ext_resource type="Script" uid="uid://6u4v18c8lyj6" path="res://Scenes/GUI/healthbar.gd" id="1_ns7pb"]
+[ext_resource type="Script" uid="uid://6u4v18c8lyj6" path="res://Scripts/healthbar.gd" id="1_ns7pb"]
+[ext_resource type="Material" uid="uid://3t8i7uv58fta" path="res://Resources/rgb_cycle_material.tres" id="1_xb8gg"]
 [ext_resource type="Texture2D" uid="uid://c6xcg1d22x1af" path="res://GFX/GUI/crystal_healthbar_cracked.png" id="2_ns7pb"]
 [ext_resource type="Texture2D" uid="uid://bof5oi1eftuac" path="res://GFX/GUI/crystal_healthbar_intact.png" id="3_hn4ql"]
 [ext_resource type="Texture2D" uid="uid://c4u0euyuydbbh" path="res://GFX/GUI/crystal_healthbar_flat.png" id="3_xb8gg"]
 
+[sub_resource type="Curve" id="Curve_hn4ql"]
+_data = [Vector2(0, 0.898876), 0.0, 0.0, 0, 0, Vector2(0.193182, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_xb8gg"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, -4.04492), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_a0cqg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.164773, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_q3g81"]
+offsets = PackedFloat32Array(0.72, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_20smy"]
+colors = PackedColorArray(0.572988, 0.572988, 0.572988, 1, 1, 1, 1, 1)
+
 [node name="Healthbar" type="Control"]
 light_mask = 0
+material = ExtResource("1_xb8gg")
 layout_mode = 3
 anchors_preset = 4
 anchor_top = 0.5
@@ -32,7 +54,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="NinePatchRect" groups=["Healthbar"]]
+[node name="TextureProgressBar" type="TextureProgressBar" parent="NinePatchRect"]
 light_mask = 0
 layout_mode = 1
 anchors_preset = 8
@@ -55,3 +77,61 @@ texture_progress = ExtResource("3_hn4ql")
 tint_under = Color(0, 0.190544, 0.355537, 1)
 tint_over = Color(0.240618, 0.628745, 1, 1)
 tint_progress = Color(0.239216, 0.627451, 1, 1)
+
+[node name="Control" type="Control" parent="NinePatchRect/TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -100.0
+offset_right = 20.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CPUParticles2D_unused" type="CPUParticles2D" parent="NinePatchRect/TextureProgressBar/Control"]
+visible = false
+modulate = Color(0, 0.271047, 0.490135, 1)
+position = Vector2(20, -6)
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(16, 1)
+direction = Vector2(0, -1)
+initial_velocity_min = 120.0
+initial_velocity_max = 120.0
+angle_min = -180.0
+angle_max = 180.0
+scale_amount_min = 5.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_hn4ql")
+
+[node name="HealthDropParticles" type="CPUParticles2D" parent="NinePatchRect/TextureProgressBar/Control"]
+modulate = Color(2.31028e-06, 0.368428, 0.654027, 1)
+position = Vector2(20, 100)
+emitting = false
+amount = 100
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.3
+emission_shape = 3
+emission_rect_extents = Vector2(12, 100)
+direction = Vector2(0, -1)
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+angle_min = -720.0
+angle_max = 720.0
+angle_curve = SubResource("Curve_xb8gg")
+scale_amount_min = 6.0
+scale_amount_max = 12.0
+scale_amount_curve = SubResource("Curve_a0cqg")
+color_ramp = SubResource("Gradient_q3g81")
+color_initial_ramp = SubResource("Gradient_20smy")

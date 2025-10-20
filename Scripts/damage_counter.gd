@@ -12,6 +12,8 @@ var counter_text_suffix : String = "[/center]"
 @export var font_size : float = 12.0
 @export var font_size_decay : float = 2.0
 @export var label_colour : Color = Color.WHITE
+@export var use_rainbow_shader : bool = false
+
 
 var start_position : Vector2
 var float_counter : float = 0.0
@@ -26,8 +28,8 @@ var camera
 		#var screen_pos = camera.unproject_position(start_position)
 		#container.position = screen_pos
 
-func initialize(in_damage_dealt, in_float_height, in_float_speed, in_float_linger, in_font_size, in_font_size_decay, in_colour, in_position):
-	damage_dealt = in_damage_dealt
+func initialize(in_damage_dealt, in_float_height, in_float_speed, in_float_linger, in_font_size, in_font_size_decay, in_colour, in_position, in_use_rainbow_shader : bool = false):
+	damage_dealt = snappedf(in_damage_dealt, 0.01)
 	float_height = in_float_height
 	float_speed = in_float_speed
 	float_linger = in_float_linger
@@ -36,6 +38,7 @@ func initialize(in_damage_dealt, in_float_height, in_float_speed, in_float_linge
 	label_colour = in_colour
 	#container.global_position = in_position
 	start_position = in_position
+	use_rainbow_shader = in_use_rainbow_shader
 
 func _ready() -> void:
 	camera = get_tree().get_first_node_in_group("Camera")
@@ -53,6 +56,16 @@ func _ready() -> void:
 	float_counter = 0.0
 	#print("Damage Counter spawned: ", str(self))
 	
+	var shader := Shader.new()
+	var mat := ShaderMaterial.new()
+	
+	if use_rainbow_shader:
+		shader.code = preload("res://Resources/Shaders/rgb_cycle.gdshader").code
+		mat.shader = shader
+		label.material = mat
+	#else:
+		#mat.shader = null
+		#label.material = null
 
 func _process(delta: float) -> void:
 	float_counter += delta

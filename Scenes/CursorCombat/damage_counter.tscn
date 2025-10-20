@@ -1,21 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsvxpdu6g517f"]
+[gd_scene load_steps=5 format=3 uid="uid://dsvxpdu6g517f"]
 
 [ext_resource type="Script" uid="uid://c3ekjgvl5181" path="res://Scripts/damage_counter.gd" id="1_8b5dl"]
+[ext_resource type="Shader" uid="uid://bp8p1re3fvm62" path="res://Resources/Shaders/no_light_render.gdshader" id="1_x3kyj"]
+[ext_resource type="Material" uid="uid://cnvibf3yo7bni" path="res://Resources/Shaders/no_light_render.tres" id="3_k3614"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f4ffs"]
-blend_mode = 1
-light_mode = 1
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x3kyj"]
+shader = ExtResource("1_x3kyj")
 
 [node name="DamageCounter" type="Node2D"]
 top_level = true
-light_mask = 2
-visibility_layer = 2
+light_mask = 0
 z_index = 20
 z_as_relative = false
+material = SubResource("ShaderMaterial_x3kyj")
 script = ExtResource("1_8b5dl")
 font_size_decay = 5.0
 
 [node name="Container" type="Control" parent="."]
+light_mask = 0
+use_parent_material = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,7 +28,8 @@ grow_vertical = 2
 
 [node name="DamageLabel" type="RichTextLabel" parent="Container"]
 light_mask = 0
-material = SubResource("CanvasItemMaterial_f4ffs")
+material = ExtResource("3_k3614")
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -40,5 +44,6 @@ grow_horizontal = 2
 grow_vertical = 2
 bbcode_enabled = true
 text = "[center]5.0[/center]"
+fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1

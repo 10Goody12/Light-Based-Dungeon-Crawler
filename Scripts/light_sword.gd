@@ -9,6 +9,7 @@ extends Node2D
 
 var last_pos = Vector2(0,0)
 
+var data
 var cursor_speed
 var direction_angle
 var velocity : Vector2
@@ -47,7 +48,7 @@ func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkl
 		trail.gradient = null
 
 func _process(delta: float) -> void:
-	var data = get_cursor_move_data(delta)
+	data = get_cursor_move_data(delta)
 	position = get_global_mouse_position()
 	
 	#draw_line_from_to(last_pos, position, 100.0, 1.0)
@@ -60,11 +61,17 @@ func _process(delta: float) -> void:
 		sparkles.emitting = false
 	else:
 		sparkles.emitting = true
-
+	
 	last_pos = position
 
 func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 	#print("Collision detected between the cursor and: ", str(body))
-	
+	var speed = data[0]
 	if target is Enemy:
-		target.inflict_damage(damage)
+		var speed_multiplier = clampf((speed/750), 0.0, 1.5)
+		var output_damage = (speed_multiplier * damage) + damage
+		if speed_multiplier >= 1.5:
+			target.inflict_damage(output_damage, true)
+			print("Critical hit!")
+		else:
+			target.inflict_damage(output_damage, false)

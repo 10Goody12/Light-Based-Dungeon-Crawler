@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvw8o0lpiy8ki"]
+[gd_scene load_steps=3 format=3 uid="uid://dvw8o0lpiy8ki"]
 
 [ext_resource type="Script" uid="uid://baigpc84tvoo8" path="res://Scripts/blood_particles.gd" id="1_ifqs5"]
+
+[sub_resource type="Gradient" id="Gradient_ifqs5"]
 
 [node name="BloodParticles" type="CPUParticles2D"]
 modulate = Color(1, 0, 0, 1)
@@ -23,6 +25,7 @@ initial_velocity_max = 250.0
 damping_min = 200.0
 damping_max = 200.0
 scale_amount_min = 0.25
+color_initial_ramp = SubResource("Gradient_ifqs5")
 hue_variation_min = -0.5
 hue_variation_max = 0.5
 script = ExtResource("1_ifqs5")
