@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dsvxpdu6g517f"]
 
-[ext_resource type="Script" uid="uid://c3ekjgvl5181" path="res://damage_counter.gd" id="1_ok317"]
+[ext_resource type="Script" uid="uid://c3ekjgvl5181" path="res://Scripts/damage_counter.gd" id="1_ok317"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_f4ffs"]
 blend_mode = 1

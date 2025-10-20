@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bmhaee122k4nu"]
 
-[ext_resource type="Script" uid="uid://cm3345mr6iubs" path="res://cursor_trail.gd" id="1_4dahn"]
+[ext_resource type="Script" uid="uid://cm3345mr6iubs" path="res://Scripts/cursor_trail.gd" id="1_4dahn"]
 
 [node name="CursorTrail" type="Line2D"]
 texture_mode = 2

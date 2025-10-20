@@ -8,13 +8,13 @@ atlas = ExtResource("1_4flbx")
 region = Rect2(0, 64, 16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
-radius = 8.0
+radius = 6.0
 
-[sub_resource type="Gradient" id="Gradient_7n8p5"]
+[sub_resource type="Gradient" id="Gradient_cvnsp"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_cvnsp"]
-gradient = SubResource("Gradient_7n8p5")
+gradient = SubResource("Gradient_cvnsp")
 use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
@@ -35,6 +35,7 @@ shape = SubResource("CircleShape2D_i3pqv")
 z_index = -5
 texture_filter = 1
 scale = Vector2(0.5, 0.5)
+energy = 1.4
 blend_mode = 2
 range_layer_min = -15
 range_layer_max = 15
@@ -42,5 +43,5 @@ range_item_cull_mask = 3
 shadow_enabled = true
 shadow_color = Color(0, 0, 0, 0.0666667)
 texture = SubResource("GradientTexture2D_cvnsp")
-texture_scale = 5.0
+texture_scale = 7.5
 height = 100.0

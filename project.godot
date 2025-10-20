@@ -20,12 +20,24 @@ config/icon="res://GFX/icon.svg"
 LightSword="*res://Scripts/light_sword.gd"
 Sound="*res://Scripts/sound.gd"
 
+[file_customization]
+
+folder_colors={
+"res://GFX/": "red",
+"res://MapChunks/": "orange",
+"res://Resources/": "yellow",
+"res://SFX/": "blue",
+"res://Scenes/": "green",
+"res://Scripts/": "teal"
+}
+
 [global_group]
 
 Player=""
-LightSword=""
 Camera=""
 CursorTrail=""
+LightSparkle=""
+CursorLight=""
 
 [input]
 
@@ -59,3 +71,4 @@ move_down={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
