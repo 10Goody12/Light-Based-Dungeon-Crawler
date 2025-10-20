@@ -47,15 +47,64 @@ func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkl
 	if not is_rainbow:
 		trail.gradient = null
 
+func check_for_objects_slashed(last_pos):
+	var segment = SegmentShape2D.new()
+	segment.a = last_pos
+	segment.b = get_global_mouse_position()
+
+	var shape_query = PhysicsShapeQueryParameters2D.new()
+	shape_query.set_shape(segment)
+	shape_query.transform = Transform2D.IDENTITY
+	shape_query.collision_mask = 0xFFFFFFFF
+
+	var space_state = get_world_2d().direct_space_state
+	var results = space_state.intersect_shape(shape_query)
+
+	return results
+	
+	#for result in results:
+		#var collider = result.collider
+		#if collider.get_parent() is Enemy:
+			#collider.get_parent().inflict_damage(output_damage)
+
+
 func _process(delta: float) -> void:
 	data = get_cursor_move_data(delta)
 	position = get_global_mouse_position()
 	
 	#draw_line_from_to(last_pos, position, 100.0, 1.0)
 	draw_trail(position, 5, true, true, 50)
-	star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor
+	star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor + Vector2(0.2, 0.2)
 	star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
 	light.energy = data[0] / 500
+	
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsRayQueryParameters2D.create(last_pos, get_global_mouse_position())
+	var result = space_state.intersect_ray(query)
+	
+	var intersects = check_for_objects_slashed(last_pos)
+	
+	#if not intersects.is_empty():
+		#print("Mouse too fast! Mouse was found to have intersected: ", intersects)
+	
+	for hitbox in intersects:
+		var collider = hitbox.collider
+		
+		if collider is Enemy:
+			#print(collider, " was caught between frames, and was an Enemy!")
+			
+			if not collider.was_damaged:
+				_on_collision_hitbox_body_entered(collider)
+				#print("Object by the name of ", collider.name, " was damaged between frames.")
+			
+		#if object is Enemy:
+			#print(object, " was caught between frames, and was an Enemy.")
+			#if not object.was_damaged:
+				#_on_collision_hitbox_body_entered(object)
+				#print("Object by the name of ", object.name, " was damaged between frames.")
+		#else:
+			##print(object, " was not an enemy. It was of type: ", str(object.get_class()))
+			#pass
 	
 	if data[0] <= 1:
 		sparkles.emitting = false
@@ -72,6 +121,6 @@ func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 		var output_damage = (speed_multiplier * damage) + damage
 		if speed_multiplier >= 1.5:
 			target.inflict_damage(output_damage, true)
-			print("Critical hit!")
+			#print("Critical hit!")
 		else:
 			target.inflict_damage(output_damage, false)

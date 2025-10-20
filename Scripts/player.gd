@@ -37,7 +37,7 @@ func _physics_process(delta):
 	if was_pushed:
 		var pushback_vec = position - last_incoming_enemy.position
 		position.lerp(position + pushback_vec * 10, 10)
-		print("Played pushed back")
+		#print("Played pushed back")
 		was_pushed = false
 
 func _on_player_hitbox_area_entered(area: Area2D) -> void:
