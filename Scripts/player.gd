@@ -9,6 +9,12 @@ var was_pushed : bool = false
 var time_since_last_hit : float = 0.0
 @export var damage_cooldown : float = 0.0
 
+###### MAYBE MOVE THESE VARIABLES LATER CUZ THIS MIGHT GET BLOATED LMAO
+
+var money : int
+
+######################
+
 @export var player_speed : float = 100
 
 var last_incoming_enemy : Enemy
@@ -42,13 +48,27 @@ func _physics_process(delta):
 
 func _on_player_hitbox_area_entered(area: Area2D) -> void:
 	#print("Player collided with enemy")
-	if not player_hit:
-		player_hit = true
-		last_incoming_enemy = area.get_parent()
-		var damage_dealt = last_incoming_enemy.get_damage()
-		player_health -= damage_dealt
-		#print("Whatever the frick")
-		emit_signal("was_injured", damage_dealt)
-		Sound.play("res://SFX/PlayerNoises/player_hit.wav", 20)
-		time_since_last_hit = 0.0
-		was_pushed = true
+	if area.get_parent() is Enemy:	
+		if not player_hit:
+			player_hit = true
+			last_incoming_enemy = area.get_parent()
+			var damage_dealt = last_incoming_enemy.get_damage()
+			player_health -= damage_dealt
+			#print("Whatever the frick")
+			emit_signal("was_injured", damage_dealt)
+			Sound.play("res://SFX/PlayerNoises/player_hit.wav", 20)
+			time_since_last_hit = 0.0
+			was_pushed = true
+	
+	elif area.get_parent() is Coin:
+		if area.get_parent().is_being_picked_up != true:
+			var coin_type = area.get_parent().pickup(self)
+			
+			if coin_type == 0:
+				money += 1
+			if coin_type == 1:
+				money += 100
+			if coin_type == 2:
+				money += 1000
+			
+			print("The player now has ", money, " units worth of value in copper coins.")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dv1bdkawr8ipe" path="res://GFX/GUI/9PR_satchel_pane.png" id="1_nhxoe"]
 [ext_resource type="Script" uid="uid://6u4v18c8lyj6" path="res://Scripts/healthbar.gd" id="1_ns7pb"]
-[ext_resource type="Material" uid="uid://3t8i7uv58fta" path="res://Resources/rgb_cycle_material.tres" id="1_xb8gg"]
+[ext_resource type="Material" uid="uid://3t8i7uv58fta" path="res://Resources/Materials/rgb_cycle_material.tres" id="1_xb8gg"]
 [ext_resource type="Texture2D" uid="uid://c6xcg1d22x1af" path="res://GFX/GUI/crystal_healthbar_cracked.png" id="2_ns7pb"]
 [ext_resource type="Texture2D" uid="uid://bof5oi1eftuac" path="res://GFX/GUI/crystal_healthbar_intact.png" id="3_hn4ql"]
 [ext_resource type="Texture2D" uid="uid://c4u0euyuydbbh" path="res://GFX/GUI/crystal_healthbar_flat.png" id="3_xb8gg"]

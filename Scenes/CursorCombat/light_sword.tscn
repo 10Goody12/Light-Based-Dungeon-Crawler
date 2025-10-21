@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://Scripts/light_sword.gd" id="1_gwfeh"]
 [ext_resource type="Script" uid="uid://c3hgkchts2drf" path="res://Scripts/cursor_sparkle.gd" id="2_1jnj3"]
-[ext_resource type="Texture2D" uid="uid://dw42ffso2ppcu" path="res://GFX/sword_sprite_5.png" id="2_7n8p5"]
+[ext_resource type="Texture2D" uid="uid://dw42ffso2ppcu" path="res://GFX/Cursor/sword_sprite_5.png" id="2_7n8p5"]
 
 [sub_resource type="Gradient" id="Gradient_7n8p5"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)

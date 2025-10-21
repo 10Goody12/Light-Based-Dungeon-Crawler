@@ -25,12 +25,36 @@ enum AggroState { PASSIVE, HOSTILE, PEACEFUL }
 @export_range(1, 15, 1.0) var damage_cooldown = 0.5
 var damage_flicker_counter = 0.0
 
+@export_category("On Death")
+@export_range(0,1, 0.05) var drop_chance : float ## The chance of this monster dropping anything. 0 for no drops at all, and 1.0 for drops every time. This does not affect item drop chances, though.
+@export_subgroup("Coins")
+@export_range(0,1, 0.05) var coins_chance : float ## When a drop does happen, this is the chance that coins will be dropped.
+@export var min_coins : int ## The lowest number of coins dropped.
+@export var max_coins : int ## The maximum number of coins dropped.
+@export_subgroup("Heals")
+@export_range(0,1, 0.05) var heals_chance : float ## When a drop does happen, this is the chance that healing potions or items will be dropped.
+@export var min_health_dropped : int ## The total minimum number of hitpoints that will be doled out with potions. The code should automatically figure out what the breakdown will be.
+@export var max_health_dropped : int ## The total maximum number of hitpoints doled out.
+@export var other_heals_dropped : Dictionary ## A dictionary of other items to be dropped. Their item id is the key, and their chance is the value.
+@export_subgroup("Power-Ups")
+@export var powerups_chance : float
+@export var powerups_dropped : Dictionary
+@export_subgroup("Weapons")
+@export var weapon_chance : float
+@export var weapon_drops : Dictionary
+@export_subgroup("Quest Items")
+@export var quest_item_drops : Dictionary
+@export_subgroup("Guaranteed Drops")
+@export var guaranteed_drops : Dictionary
+
 @onready var player = get_tree().get_first_node_in_group("Player")
 #@onready var blood = $BloodParticles
 @onready var body = $AnimatedSprite2D
 
 var was_damaged : bool = false
 var desired_direction_normalized
+
+signal death
 
 func get_desired_direction():
 	#var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -42,9 +66,17 @@ func get_desired_direction():
 	
 	velocity = velocity.lerp(desired_dir.normalized() * enemy_speed if desired_dir != Vector2.ZERO else Vector2.ZERO, 0.1)
 
+func _on_death():
+	var coin_scene = load("res://Scenes/Drops/coin.tscn")
+	var new_coin = coin_scene.instantiate()
+	new_coin.position = position
+	get_tree().get_root().add_child(new_coin)
+	new_coin.name = "Coin"
+
 func check_health():
 	if health <= 0:
 		body.visible = false
+		emit_signal("death")
 		queue_free()
 
 func inflict_damage(in_damage, was_crit):
@@ -56,10 +88,12 @@ func inflict_damage(in_damage, was_crit):
 		var blood_particles = blood_scene.instantiate()
 		blood_particles.position = self.position
 		get_tree().root.add_child(blood_particles)
+		blood_particles.name = "AttackParticles"
 		
 		#print("test 1")
 		var damage_counter_scene: PackedScene = load("res://Scenes/CursorCombat/damage_counter.tscn")
 		var damage_counter = damage_counter_scene.instantiate()
+		damage_counter.name = "DamageCounter"
 		
 		damage_counter.initialize(in_damage, 10, 0.01, 1.5, 12, 1.0, Color.RED, self.global_position, was_crit)
 		get_tree().root.add_child(damage_counter)
