@@ -1,7 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://03mje5tgwt70"]
+[gd_scene load_steps=3 format=3 uid="uid://03mje5tgwt70"]
 
 [ext_resource type="PackedScene" uid="uid://dxy70blrnplao" path="res://Scenes/GUI/healthbar.tscn" id="1_psa72"]
+[ext_resource type="PackedScene" uid="uid://ceym6wfi47fgw" path="res://Scenes/GUI/money_gauge.tscn" id="2_gm40n"]
 
 [node name="GUI" type="CanvasLayer"]
 
 [node name="Healthbar" parent="." instance=ExtResource("1_psa72")]
+
+[node name="MoneyGauge" parent="." instance=ExtResource("2_gm40n")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 0
+scale = Vector2(1.5, 1.5)

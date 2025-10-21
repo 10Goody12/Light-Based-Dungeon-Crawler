@@ -114,3 +114,4 @@ default_state = 1
 
 [node name="Coin" parent="." instance=ExtResource("3_er131")]
 position = Vector2(47, 39)
+coin_type = 1

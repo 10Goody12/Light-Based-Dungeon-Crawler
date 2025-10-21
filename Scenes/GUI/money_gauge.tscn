@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceym6wfi47fgw"]
+
+[ext_resource type="PackedScene" uid="uid://csx4w6s4cup36" path="res://Scenes/Drops/coin.tscn" id="1_gtc86"]
+[ext_resource type="Script" uid="uid://bnh22ngqv1bxh" path="res://Scenes/GUI/coin_ui_handler.gd" id="1_khbba"]
+[ext_resource type="Script" uid="uid://bc70dpblkgltf" path="res://Scenes/GUI/counter.gd" id="2_c8eci"]
+
+[node name="MoneyGauge" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -33.5
+offset_bottom = 33.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="CoinContainer" type="CenterContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/CoinContainer"]
+layout_mode = 2
+
+[node name="CoinUIHandler" type="Control" parent="VBoxContainer/CoinContainer/CenterContainer"]
+layout_mode = 2
+script = ExtResource("1_khbba")
+
+[node name="Coin" parent="VBoxContainer/CoinContainer/CenterContainer/CoinUIHandler" instance=ExtResource("1_gtc86")]
+visible = false
+scale = Vector2(3, 3)
+is_physically_in_game = false
+
+[node name="Counter" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+horizontal_alignment = 1
+script = ExtResource("2_c8eci")

@@ -20,6 +20,7 @@ var money : int
 var last_incoming_enemy : Enemy
 
 signal was_injured
+signal money_collected(coin_type)
 
 func _ready() -> void:
 	player_health = player_max_health
@@ -61,7 +62,7 @@ func _on_player_hitbox_area_entered(area: Area2D) -> void:
 			was_pushed = true
 	
 	elif area.get_parent() is Coin:
-		if area.get_parent().is_being_picked_up != true:
+		if area.get_parent().is_being_picked_up != true and area.get_parent().is_physically_in_game:
 			var coin_type = area.get_parent().pickup(self)
 			
 			if coin_type == 0:
@@ -71,4 +72,5 @@ func _on_player_hitbox_area_entered(area: Area2D) -> void:
 			if coin_type == 2:
 				money += 1000
 			
-			print("The player now has ", money, " units worth of value in copper coins.")
+			#print("The player now has ", money, " units worth of value in copper coins.")
+			emit_signal("money_collected", coin_type)
