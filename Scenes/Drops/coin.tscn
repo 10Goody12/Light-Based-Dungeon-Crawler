@@ -174,7 +174,7 @@ material = SubResource("ShaderMaterial_mayx1")
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ilj7q")
 animation = &"copper"
-frame_progress = 0.356552
+frame_progress = 0.234312
 
 [node name="Shadow" type="Sprite2D" parent="AnimatedSprite2D"]
 modulate = Color(0, 0, 0, 0.344)

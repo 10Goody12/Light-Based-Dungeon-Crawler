@@ -124,3 +124,9 @@ func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 			#print("Critical hit!")
 		else:
 			target.inflict_damage(output_damage, false)
+	
+	elif target.collision_layer & (1 << 0):
+		print("Target is on layer 1 (Wall)")
+	
+	elif target.physics_layer_0 & (1 << 0):
+		print("Target is on layer 1 (Wall)")
