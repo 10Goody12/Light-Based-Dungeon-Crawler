@@ -16,7 +16,7 @@ var shadow
 @export var is_physically_in_game : bool = true
 
 func pickup(in_player : Player):
-	Sound.play("res://SFX/edited_coin_sound.wav", 20)
+	Sound.play("res://SFX/edited_coin_sound.wav", 20, true, 0.2)
 	is_being_picked_up = true
 	picker_upper = in_player
 	return coin_type

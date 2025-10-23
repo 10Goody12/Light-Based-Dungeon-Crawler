@@ -1,18 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://buui0u2alvorg"]
+[gd_scene load_steps=5 format=3 uid="uid://buui0u2alvorg"]
 
 [ext_resource type="PackedScene" uid="uid://03mje5tgwt70" path="res://Scenes/GUI/gui.tscn" id="1_21xkr"]
 [ext_resource type="PackedScene" uid="uid://bo75o5ohak2e7" path="res://Scenes/player.tscn" id="2_kry3j"]
 [ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://Scenes/CursorCombat/light_sword.tscn" id="4_6bp64"]
-[ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/CursorCombat/cursor_trail.tscn" id="5_kry3j"]
 [ext_resource type="PackedScene" uid="uid://b0krc5mdf61qj" path="res://MapChunks/StartAreas/start_map_1.tscn" id="6_21xkr"]
-
-[sub_resource type="Curve" id="Curve_kry3j"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.632979, 0.224719), 0.0, 0.0, 0, 0, Vector2(1, 0.651685), 0.391178, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Gradient" id="Gradient_kry3j"]
-offsets = PackedFloat32Array(0, 0.193333, 0.393333, 0.606667, 0.813333, 1)
-colors = PackedColorArray(100, 0, 0, 1, 0.887904, 0.510854, 0.0715154, 1, 1, 0.807285, 0.0823955, 1, 0.20434, 0.792237, 1.15514e-06, 1, 0.136993, 0.394253, 1, 1, 0.610971, 0.0189431, 0.610685, 1)
 
 [node name="MAIN" type="Node2D"]
 y_sort_enabled = true
@@ -31,15 +22,6 @@ zoom = Vector2(5, 5)
 
 [node name="LightSword" parent="." instance=ExtResource("4_6bp64")]
 metadata/_edit_lock_ = true
-
-[node name="CursorTrail" parent="." groups=["CursorTrail"] instance=ExtResource("5_kry3j")]
-width = 2.0
-width_curve = SubResource("Curve_kry3j")
-gradient = SubResource("Gradient_kry3j")
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-max_line_points = 5
 
 [node name="Darkness" type="DirectionalLight2D" parent="."]
 z_index = 5

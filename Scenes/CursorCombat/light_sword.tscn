@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://be763vwsw412y"]
+[gd_scene load_steps=12 format=3 uid="uid://be763vwsw412y"]
 
 [ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://Scripts/light_sword.gd" id="1_gwfeh"]
 [ext_resource type="Script" uid="uid://c3hgkchts2drf" path="res://Scripts/cursor_sparkle.gd" id="2_1jnj3"]
 [ext_resource type="Texture2D" uid="uid://dw42ffso2ppcu" path="res://GFX/Cursor/sword_sprite_5.png" id="2_7n8p5"]
+[ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/CursorCombat/cursor_trail.tscn" id="4_6v1wn"]
 
 [sub_resource type="Gradient" id="Gradient_7n8p5"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -28,6 +29,10 @@ point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_1jnj3"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Curve" id="Curve_6v1wn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.808989), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="LightSword" type="CharacterBody2D"]
 collision_layer = 2
@@ -90,5 +95,9 @@ color_ramp = SubResource("Gradient_1jnj3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_fjwkt")
+
+[node name="CursorTrail" parent="." groups=["CursorTrail"] instance=ExtResource("4_6v1wn")]
+width_curve = SubResource("Curve_6v1wn")
+max_line_points = 15
 
 [connection signal="body_entered" from="CollisionHitbox" to="." method="_on_collision_hitbox_body_entered"]

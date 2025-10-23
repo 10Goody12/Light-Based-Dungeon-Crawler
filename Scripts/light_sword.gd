@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 @export_range(0, 2500, 0.1) var damage : float = 1.0
 @onready var sparkles = get_tree().get_first_node_in_group("CursorSparkles")
@@ -7,18 +7,21 @@ extends Node2D
 @onready var light = get_tree().get_first_node_in_group("CursorLight")
 @onready var trail = get_tree().get_first_node_in_group("CursorTrail")
 
+@export var max_speed := 1200.0
+@export var acceleration := 4000.0
+@export var damping := 8.0
+
 var last_pos = Vector2(0,0)
 
 var data
 var cursor_speed
 var direction_angle
-var velocity : Vector2
 
 #func _ready() -> void:
 	#trail = $CursorTrail
 
 func get_cursor_move_data(delta: float):
-	var cursor_diff_vec = get_global_mouse_position() - last_pos
+	var cursor_diff_vec = global_position - last_pos
 	direction_angle = atan2(cursor_diff_vec.y, cursor_diff_vec.x)
 	cursor_speed = cursor_diff_vec.length() / delta
 	#print("Cursor speed: ", cursor_speed, "\nCursor direction: ", direction_angle)
@@ -39,8 +42,8 @@ func get_cursor_move_data(delta: float):
 	#new_line.end_cap_mode = Line2D.LINE_CAP_ROUND
 	##new_line.set_time_left(in_lifetime)
 
-func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkling : bool = false, max_points : int = TYPE_NIL):	
-	trail.add_point(in_end)
+func draw_trail(in_width, is_rainbow := false, is_sparkling := false, max_points := TYPE_NIL):
+	trail.add_point(position)
 	trail.width = in_width
 	if max_points != TYPE_NIL:
 		trail.set_max_line_points(max_points)
@@ -50,7 +53,7 @@ func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkl
 func check_for_objects_slashed(last_pos):
 	var segment = SegmentShape2D.new()
 	segment.a = last_pos
-	segment.b = get_global_mouse_position()
+	segment.b = global_position
 
 	var shape_query = PhysicsShapeQueryParameters2D.new()
 	shape_query.set_shape(segment)
@@ -67,16 +70,58 @@ func check_for_objects_slashed(last_pos):
 		#if collider.get_parent() is Enemy:
 			#collider.get_parent().inflict_damage(output_damage)
 
+func get_input_dir():
+	var mouse_pos = get_global_mouse_position()	
+	var diff_vec = mouse_pos - global_position
+	return diff_vec
 
-func _process(delta: float) -> void:
+func _ready():
+	last_pos = global_position
+
+func _physics_process(delta: float) -> void:
+	print("Velocity:", velocity, "  Colliding:", is_on_wall())
+	
+	#print("Sword global:", global_position, " | Trail local:", trail.to_local(global_position))
+	
 	data = get_cursor_move_data(delta)
-	position = get_global_mouse_position()
+	#position = get_global_mouse_position()
+	
+	#print("Drawing line from previous pos to ", global_position)
+	draw_trail(5, true, true, 50)
+	
+	##############################################################
+	#var direction = get_input_dir()
+	#velocity = direction * 100
+	#move_and_slide()
+	##############################################################
+	
+	var to_mouse = get_global_mouse_position() - global_position
+	var dist = to_mouse.length()
+
+	# Only move if there's a meaningful distance
+	if dist > 0.001:
+		var dir = to_mouse / dist
+		var desired_velocity = dir * min(dist * 10.0, max_speed)
+		velocity = velocity.move_toward(desired_velocity, acceleration * delta)
+	else:
+		velocity = Vector2.ZERO
+
+	# Apply gentle damping to stop vibrating at walls
+	velocity -= velocity * damping * delta
+
+	move_and_slide()
+	
+	##############################################################
 	
 	#draw_line_from_to(last_pos, position, 100.0, 1.0)
-	draw_trail(position, 5, true, true, 50)
+	
 	star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor + Vector2(0.2, 0.2)
 	star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
 	light.energy = data[0] / 500
+	
+	#star.scale += velocity*velocity / 1000000000
+	#star_2.scale += velocity*velocity / 1000000000
+	light.energy = velocity.length() / 500
 	
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(last_pos, get_global_mouse_position())
@@ -111,7 +156,7 @@ func _process(delta: float) -> void:
 	else:
 		sparkles.emitting = true
 	
-	last_pos = position
+	last_pos = global_position
 
 func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 	#print("Collision detected between the cursor and: ", str(body))

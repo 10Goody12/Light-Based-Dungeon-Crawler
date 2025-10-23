@@ -74,3 +74,6 @@ func _on_player_hitbox_area_entered(area: Area2D) -> void:
 			
 			#print("The player now has ", money, " units worth of value in copper coins.")
 			emit_signal("money_collected", coin_type)
+	
+	else:
+		print("Player collided with ", area.name, ", which is owned by ", area.get_parent())
