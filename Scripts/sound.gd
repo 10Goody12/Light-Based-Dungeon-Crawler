@@ -27,10 +27,17 @@ func play(file_path, decibel_diff, random_amplitude = 0):
 	player.volume_db -= decibel_diff
 	player.pitch_scale *= randf_range(1 - random_amplitude, 1 + random_amplitude)
 	player.play()
+	return player
 
-func play_random_hit():
+func play_random_hit(random_amplitude = 0):
 	if hit_sound_names.size() > 0:
 		var random_file = hit_sound_names.pick_random()
-		play(random_file, 30)
+		var player = play(random_file, 30)
+		player.pitch_scale *= randf_range(1 - random_amplitude, 1 + random_amplitude)
 	else:
 		print("No hit sounds found to play!")
+
+func play_death_sound(in_type):
+	if in_type == 0:
+		# Splat
+		play("res://SFX/DeathNoises/splat_death.wav", 30, 0.5)

@@ -72,14 +72,20 @@ func _on_death():
 	new_coin.position = position
 	get_tree().get_root().add_child(new_coin)
 	new_coin.name = "Coin"
+	
+	Sound.play_random_hit(0.3)
+	Sound.play_death_sound(0) # Splat sound
 
 func check_health():
 	if health <= 0:
 		body.visible = false
 		emit_signal("death")
 		queue_free()
+		return false
+	else:
+		return true
 
-func inflict_damage(in_damage, was_crit):
+func inflict_damage(in_damage, was_crit, damage_type):
 	if was_damaged == false:
 		health -= in_damage
 		was_damaged = true
@@ -90,6 +96,13 @@ func inflict_damage(in_damage, was_crit):
 		get_tree().root.add_child(blood_particles)
 		blood_particles.name = "AttackParticles"
 		
+		var slash_scene: PackedScene = load("res://Scenes/CursorCombat/slash_effect.tscn")
+		var slash_effect = slash_scene.instantiate()
+		slash_effect.position = self.position
+		get_tree().root.add_child(slash_effect)
+		slash_effect.set_damage_type(0)
+		slash_effect.name = "SlashEffect_" + str(damage_type)
+		
 		#print("test 1")
 		var damage_counter_scene: PackedScene = load("res://Scenes/CursorCombat/damage_counter.tscn")
 		var damage_counter = damage_counter_scene.instantiate()
@@ -98,7 +111,8 @@ func inflict_damage(in_damage, was_crit):
 		damage_counter.initialize(in_damage, 10, 0.01, 1.5, 12, 1.0, Color.RED, self.global_position, was_crit)
 		get_tree().root.add_child(damage_counter)
 		
-		Sound.play_random_hit()
+		if check_health():
+			Sound.play_random_hit(0.3)
 
 func get_damage():
 	var out_damage = randf_range(min_damage, max_damage)
