@@ -46,6 +46,8 @@ func _physics_process(delta):
 		position.lerp(position + pushback_vec * 10, 10)
 		#print("Played pushed back")
 		was_pushed = false
+	
+	#print(velocity)
 
 func _on_player_hitbox_area_entered(area: Area2D) -> void:
 	#print("Player collided with enemy")

@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 @export_range(0, 2500, 0.1) var damage : float = 1.0
 @onready var sparkles = get_tree().get_first_node_in_group("CursorSparkles")
@@ -6,24 +6,29 @@ extends Node2D
 @onready var star_2 = get_tree().get_nodes_in_group("CursorStar")[1]
 @onready var light = get_tree().get_first_node_in_group("CursorLight")
 @onready var trail = get_tree().get_first_node_in_group("CursorTrail")
+@onready var lightsword = get_tree().get_first_node_in_group("LightSword")
+
+@onready var player = get_tree().get_first_node_in_group("Player")
 
 var last_pos = Vector2(0,0)
 
 var data
 var cursor_speed
 var direction_angle
-var velocity : Vector2
+
+var is_mouse_inside : bool = true
 
 #func _ready() -> void:
 	#trail = $CursorTrail
 
 func get_cursor_move_data(delta: float):
-	var cursor_diff_vec = get_global_mouse_position() - last_pos
-	direction_angle = atan2(cursor_diff_vec.y, cursor_diff_vec.x)
-	cursor_speed = cursor_diff_vec.length() / delta
+	#var cursor_diff_vec = get_position_delta()
+	#direction_angle = atan2(cursor_diff_vec.y, cursor_diff_vec.x)
+	#cursor_speed = cursor_diff_vec.length() / delta
 	#print("Cursor speed: ", cursor_speed, "\nCursor direction: ", direction_angle)
+	var cursor_speed = get_real_velocity().length()
 	
-	var cursor_data = [ cursor_speed, direction_angle ]
+	var cursor_data = [ cursor_speed, 0]
 	return cursor_data
 
 #func draw_line_from_to(in_start : Vector2, in_end : Vector2, in_lifetime, in_width):
@@ -39,18 +44,18 @@ func get_cursor_move_data(delta: float):
 	#new_line.end_cap_mode = Line2D.LINE_CAP_ROUND
 	##new_line.set_time_left(in_lifetime)
 
-func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkling : bool = false, max_points : int = TYPE_NIL):	
-	trail.add_point(in_end)
-	trail.width = in_width
-	if max_points != TYPE_NIL:
-		trail.set_max_line_points(max_points)
-	if not is_rainbow:
-		trail.gradient = null
+#func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkling : bool = false, max_points : int = TYPE_NIL):	
+	#trail.add_point(in_end)
+	#trail.width = in_width
+	#if max_points != TYPE_NIL:
+		#trail.set_max_line_points(max_points)
+	#if not is_rainbow:
+		#trail.gradient = null
 
-func check_for_objects_slashed(last_pos):
+func check_for_objects_slashed(last_pos, current_pos):
 	var segment = SegmentShape2D.new()
 	segment.a = last_pos
-	segment.b = get_global_mouse_position()
+	segment.b = current_pos
 
 	var shape_query = PhysicsShapeQueryParameters2D.new()
 	shape_query.set_shape(segment)
@@ -68,21 +73,53 @@ func check_for_objects_slashed(last_pos):
 			#collider.get_parent().inflict_damage(output_damage)
 
 
+func _notification(what):
+	if what == NOTIFICATION_WM_MOUSE_EXIT:
+		#print("Mouse exited window")
+		is_mouse_inside = false
+		
+	elif what == NOTIFICATION_WM_MOUSE_ENTER:
+		#print("Mouse entered window")
+		is_mouse_inside = true
+
 func _process(delta: float) -> void:
 	data = get_cursor_move_data(delta)
-	position = get_global_mouse_position()
+	
+	if is_mouse_inside:
+		var target = get_global_mouse_position()
+		var diff = target - position
+		
+		# Spring strength: controls how fast it snaps to cursor
+		var stiffness = 1500.0
+		# Damping: prevents orbiting/jittering
+		var damping = 50.0
+		
+		#velocity += 500.0 * ( get_global_mouse_position() - position ) * delta
+		
+		var accel = stiffness * diff - damping * velocity
+		velocity += accel * delta
+	else:
+		velocity = Vector2(0,0)
+		
+	move_and_slide()
+	
+	if get_global_transform_with_canvas().origin <= Vector2(0,0) or get_global_transform_with_canvas().origin >= Vector2(DisplayServer.window_get_size()):
+		position = player.position
+		print("Keep your cursor with you!")
+	
+	#position = position.lerp(get_global_mouse_position(), 1.0)
 	
 	#draw_line_from_to(last_pos, position, 100.0, 1.0)
-	draw_trail(position, 5, true, true, 50)
+	#lightsword.draw_trail(position, 5, true, true, 50)
 	star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor + Vector2(0.2, 0.2)
-	star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
+	#star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
 	light.energy = data[0] / 500
 	
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(last_pos, get_global_mouse_position())
 	var result = space_state.intersect_ray(query)
 	
-	var intersects = check_for_objects_slashed(last_pos)
+	var intersects = check_for_objects_slashed(last_pos, position)
 	
 	#if not intersects.is_empty():
 		#print("Mouse too fast! Mouse was found to have intersected: ", intersects)
@@ -111,7 +148,7 @@ func _process(delta: float) -> void:
 	else:
 		sparkles.emitting = true
 	
-	last_pos = position
+	last_pos = get_global_mouse_position()
 
 func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 	#print("Collision detected between the cursor and: ", str(body))

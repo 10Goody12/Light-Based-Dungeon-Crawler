@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://be763vwsw412y"]
+[gd_scene load_steps=13 format=3 uid="uid://be763vwsw412y"]
 
 [ext_resource type="Script" uid="uid://ddjvjp4uin6d4" path="res://Scripts/light_sword.gd" id="1_gwfeh"]
 [ext_resource type="Script" uid="uid://c3hgkchts2drf" path="res://Scripts/cursor_sparkle.gd" id="2_1jnj3"]
 [ext_resource type="Texture2D" uid="uid://dw42ffso2ppcu" path="res://GFX/Cursor/sword_sprite_5.png" id="2_7n8p5"]
+[ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/CursorCombat/cursor_trail.tscn" id="4_6v1wn"]
 
 [sub_resource type="Gradient" id="Gradient_7n8p5"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -15,7 +16,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjwkt"]
-radius = 4.0
+radius = 1.0
 
 [sub_resource type="Curve" id="Curve_1jnj3"]
 _limits = [-360.0, 360.0, 0.0, 1.0]
@@ -29,9 +30,16 @@ point_count = 3
 [sub_resource type="Gradient" id="Gradient_1jnj3"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="Curve" id="Curve_d78q3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.632979, 0.224719), 0.0, 0.0, 0, 0, Vector2(1, 0.651685), 0.391178, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_1n6pl"]
+offsets = PackedFloat32Array(0, 0.193333, 0.393333, 0.606667, 0.813333, 1)
+colors = PackedColorArray(100, 0, 0, 1, 0.887904, 0.510854, 0.0715154, 1, 1, 0.807285, 0.0823955, 1, 0.20434, 0.792237, 1.15514e-06, 1, 0.136993, 0.394253, 1, 1, 0.610971, 0.0189431, 0.610685, 1)
+
 [node name="LightSword" type="CharacterBody2D"]
 collision_layer = 2
-collision_mask = 3
 script = ExtResource("1_gwfeh")
 
 [node name="PointLight2D" type="PointLight2D" parent="." groups=["CursorLight"]]
@@ -90,5 +98,15 @@ color_ramp = SubResource("Gradient_1jnj3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_fjwkt")
+
+[node name="CursorTrail" parent="." instance=ExtResource("4_6v1wn")]
+visible = false
+width = 2.0
+width_curve = SubResource("Curve_d78q3")
+gradient = SubResource("Gradient_1n6pl")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+max_line_points = 5
 
 [connection signal="body_entered" from="CollisionHitbox" to="." method="_on_collision_hitbox_body_entered"]

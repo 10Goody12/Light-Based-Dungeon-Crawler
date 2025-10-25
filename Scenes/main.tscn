@@ -10,7 +10,7 @@
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.632979, 0.224719), 0.0, 0.0, 0, 0, Vector2(1, 0.651685), 0.391178, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="Gradient" id="Gradient_kry3j"]
+[sub_resource type="Gradient" id="Gradient_21xkr"]
 offsets = PackedFloat32Array(0, 0.193333, 0.393333, 0.606667, 0.813333, 1)
 colors = PackedColorArray(100, 0, 0, 1, 0.887904, 0.510854, 0.0715154, 1, 1, 0.807285, 0.0823955, 1, 0.20434, 0.792237, 1.15514e-06, 1, 0.136993, 0.394253, 1, 1, 0.610971, 0.0189431, 0.610685, 1)
 
@@ -29,17 +29,8 @@ y_sort_enabled = true
 [node name="Camera2D" type="Camera2D" parent="Player" groups=["Camera"]]
 zoom = Vector2(5, 5)
 
-[node name="LightSword" parent="." instance=ExtResource("4_6bp64")]
+[node name="LightSword" parent="." groups=["LightSword"] instance=ExtResource("4_6bp64")]
 metadata/_edit_lock_ = true
-
-[node name="CursorTrail" parent="." groups=["CursorTrail"] instance=ExtResource("5_kry3j")]
-width = 2.0
-width_curve = SubResource("Curve_kry3j")
-gradient = SubResource("Gradient_kry3j")
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-max_line_points = 5
 
 [node name="Darkness" type="DirectionalLight2D" parent="."]
 z_index = 5
@@ -47,3 +38,12 @@ color = Color(0, 0, 0, 1)
 energy = 0.85
 blend_mode = 2
 shadow_item_cull_mask = 0
+
+[node name="CursorTrail" parent="." groups=["CursorTrail"] instance=ExtResource("5_kry3j")]
+width = 2.0
+width_curve = SubResource("Curve_kry3j")
+gradient = SubResource("Gradient_21xkr")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+max_line_points = 5
