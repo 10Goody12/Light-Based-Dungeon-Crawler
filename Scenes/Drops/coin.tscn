@@ -1,22 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://csx4w6s4cup36"]
+[gd_scene load_steps=25 format=3 uid="uid://csx4w6s4cup36"]
 
 [ext_resource type="Script" uid="uid://cdycjehrfse50" path="res://Scenes/Drops/coin.gd" id="1_xsg4j"]
 [ext_resource type="Texture2D" uid="uid://cwk7w2epwbs4i" path="res://GFX/Drops/coins_spritesheet.png" id="1_yx1d1"]
 [ext_resource type="Texture2D" uid="uid://bonxdidiw4ojx" path="res://GFX/shadow.png" id="2_3hyqy"]
-[ext_resource type="Shader" uid="uid://dds4gkummvgay" path="res://Scenes/Drops/glimmer_shader.gdshader" id="2_uylv2"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mayx1"]
-shader = ExtResource("2_uylv2")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_angle = 45.0
-shader_parameter/shine_speed = 0.5
-shader_parameter/shine_delay = 1.0
-shader_parameter/shine_reverse = true
-shader_parameter/Line_Width = 0.01
-shader_parameter/Line_Smoothness = 0.045
-shader_parameter/Brightness = 3.0
-shader_parameter/Distortion = 0.0
-shader_parameter/LensStrength = 0.0
+[ext_resource type="Material" uid="uid://d0d8xdl50ohqs" path="res://Resources/Materials/glimmer_material.tres" id="2_uylv2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3hyqy"]
 atlas = ExtResource("1_yx1d1")
@@ -170,7 +157,7 @@ script = ExtResource("1_xsg4j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
-material = SubResource("ShaderMaterial_mayx1")
+material = ExtResource("2_uylv2")
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_ilj7q")
 animation = &"copper"

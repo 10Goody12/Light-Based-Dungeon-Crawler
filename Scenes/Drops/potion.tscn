@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjakhjmwul4k8"]
+
+[ext_resource type="Texture2D" uid="uid://bxaujmqb18314" path="res://GFX/Drops/potions_spritesheet.png" id="1_b1obn"]
+[ext_resource type="Material" uid="uid://d0d8xdl50ohqs" path="res://Resources/Materials/glimmer_material.tres" id="1_di42w"]
+[ext_resource type="Script" uid="uid://bfe24eir44pvx" path="res://Scenes/Drops/potion.gd" id="3_r2dm3"]
+[ext_resource type="Texture2D" uid="uid://bonxdidiw4ojx" path="res://GFX/shadow.png" id="3_s0777"]
+
+[node name="Potion" type="Sprite2D"]
+material = ExtResource("1_di42w")
+texture = ExtResource("1_b1obn")
+hframes = 6
+vframes = 2
+frame = 1
+region_rect = Rect2(0, 0, 15, 16)
+script = ExtResource("3_r2dm3")
+potion_type_visual = 1
+potion_colour = Color(1, 1, 1, 0.5)
+heal_amount = 20
+
+[node name="Liquid" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0.256895, 0.227584, 1)
+texture = ExtResource("1_b1obn")
+hframes = 6
+vframes = 2
+frame = 6
+region_rect = Rect2(0, 0, 15, 16)
+
+[node name="Shadow" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.344)
+z_index = -1
+position = Vector2(0, 9)
+texture = ExtResource("3_s0777")
