@@ -3,11 +3,16 @@ class_name Player
 
 @export var player_max_health : float = 100.0
 var player_health : float
+
 @onready var health_bar = get_tree().get_first_node_in_group("Healthbar")
+@onready var animation = $AnimationPlayer
+@onready var body = $Body
+
 var player_hit : bool = false
 var was_pushed : bool = false
 var time_since_last_hit : float = 0.0
-@export var damage_cooldown : float = 0.0
+@export var damage_cooldown : float = 1.0
+
 
 ###### MAYBE MOVE THESE VARIABLES LATER CUZ THIS MIGHT GET BLOATED LMAO
 
@@ -25,10 +30,19 @@ signal money_collected(coin_type)
 func _ready() -> void:
 	player_health = player_max_health
 	#was_injured.connect(health_bar.subtract_health.bind())
+	animation.play("idle")
 
 func get_input():
 	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	velocity = velocity.lerp(input_dir.normalized() * player_speed if input_dir != Vector2.ZERO else Vector2.ZERO, 0.1)
+
+func adjust_flicker(delta):
+	if player_hit:
+		modulate = Color.RED
+		#modulate.a = 0.5
+	else:
+		modulate = modulate.lerp(Color.WHITE, delta)
+		#modulate.a += 1 / damage_cooldown
 
 func _physics_process(delta):
 	#if is_frozen:
@@ -36,6 +50,10 @@ func _physics_process(delta):
 	
 	get_input()
 	move_and_slide()
+	
+	adjust_flicker(delta * 10)
+		
+	###########
 	
 	time_since_last_hit += delta
 	if time_since_last_hit >= damage_cooldown:
@@ -54,11 +72,23 @@ func _on_player_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_parent() is Enemy:	
 		if not player_hit:
 			player_hit = true
+			
 			last_incoming_enemy = area.get_parent()
 			var damage_dealt = last_incoming_enemy.get_damage()
 			player_health -= damage_dealt
-			#print("Whatever the frick")
 			emit_signal("was_injured", damage_dealt)
+			
+			var new_shaker = ShakeManager.create(body)
+			new_shaker.setup_shake(2, 2, 25, 2, 1, false, 0)
+			
+			var blood_scene: PackedScene = load("res://Scenes/CursorCombat/blood_particles.tscn")
+			var blood_particles = blood_scene.instantiate()
+			blood_particles.position = position
+			get_tree().root.add_child(blood_particles)
+			blood_particles.name = "AttackParticles"
+			blood_particles.modulate = Color.CYAN
+			blood_particles.self_modulate = Color.CYAN
+			
 			Sound.play("res://SFX/PlayerNoises/player_hit.wav", 20)
 			time_since_last_hit = 0.0
 			was_pushed = true

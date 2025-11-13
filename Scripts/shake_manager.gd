@@ -1,5 +1,9 @@
 extends Node
 
-#func shake(in_object : Node, baseline : float, amplitude : float, interval :float, x_axis : bool, y_axis : bool = false, phase_shift : float = TYPE_NIL):
-	#if in_object.position != null:
-		#in_object
+func create(in_node):
+	print("A shaker was made for a node called ", in_node.name)
+	var shaker_scene: PackedScene = load("res://Scenes/shaker.tscn")
+	var new_shaker = shaker_scene.instantiate()
+	in_node.add_child(new_shaker)
+	
+	return new_shaker

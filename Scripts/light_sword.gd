@@ -64,6 +64,9 @@ func check_for_objects_slashed(last_pos, current_pos):
 
 	var space_state = get_world_2d().direct_space_state
 	var results = space_state.intersect_shape(shape_query)
+	
+	#if results.has(Enemy):
+		#print("Attack candidates were found between frames:\n", results)
 
 	return results
 	
