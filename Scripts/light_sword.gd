@@ -21,7 +21,7 @@ var is_mouse_inside : bool = true
 #func _ready() -> void:
 	#trail = $CursorTrail
 
-func get_cursor_move_data(delta: float):
+func get_cursor_move_data(_delta: float):
 	#var cursor_diff_vec = get_position_delta()
 	#direction_angle = atan2(cursor_diff_vec.y, cursor_diff_vec.x)
 	#cursor_speed = cursor_diff_vec.length() / delta
@@ -82,6 +82,27 @@ func _notification(what):
 		#print("Mouse entered window")
 		is_mouse_inside = true
 
+#func _physics_process(delta: float) -> void:
+	#if get_global_transform_with_canvas().origin <= Vector2(0,0) or get_global_transform_with_canvas().origin >= Vector2(DisplayServer.window_get_size()):
+		##trail.pause_trail()
+		#position = player.position
+		#trail.wipe_trail()
+		##trail.unpause_trail()
+		#print("Keep your cursor with you!")
+
+func _physics_process(delta: float) -> void:
+	var viewport_pos: Vector2 = get_global_transform_with_canvas().origin
+	var vp_rect: Rect2 = get_viewport_rect()
+
+	# Optional: shrink a bit to avoid flickering on the exact border
+	const MARGIN := -50.0
+	vp_rect = vp_rect.grow(-MARGIN)
+
+	if not vp_rect.has_point(viewport_pos):
+		position = get_global_mouse_position()
+		trail.wipe_trail()
+		print("Keep your cursor with you!")
+
 func _process(delta: float) -> void:
 	data = get_cursor_move_data(delta)
 	
@@ -102,10 +123,6 @@ func _process(delta: float) -> void:
 		velocity = Vector2(0,0)
 		
 	move_and_slide()
-	
-	if get_global_transform_with_canvas().origin <= Vector2(0,0) or get_global_transform_with_canvas().origin >= Vector2(DisplayServer.window_get_size()):
-		position = player.position
-		print("Keep your cursor with you!")
 	
 	#position = position.lerp(get_global_mouse_position(), 1.0)
 	

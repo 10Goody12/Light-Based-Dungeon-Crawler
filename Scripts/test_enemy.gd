@@ -70,8 +70,9 @@ func _on_death():
 	var coin_scene = load("res://Scenes/Drops/coin.tscn")
 	var new_coin = coin_scene.instantiate()
 	new_coin.position = position
-	get_tree().get_root().add_child(new_coin)
 	new_coin.name = "Coin"
+	
+	get_tree().get_root().call_deferred("add_child", new_coin)
 	
 	Sound.play_random_hit(0.3)
 	Sound.play_death_sound(0) # Splat sound
@@ -146,10 +147,6 @@ func play_correct_animation():
 
 ####
 
-func _ready() -> void:
-	push_warning("Damage flickering augmented with halved alpha for damaged enemies. It was thought that doing this would A) let the player know which mobs had been attacked more clearly, and B) it was theorized to be useful when fighting many many mobs, potentially making it easier to know when you've missed a mob, or 'missed a spot.' Reconsider in future.")
-
-
 func _process(delta: float) -> void:
 	if was_damaged:
 		damage_flicker_counter += delta
@@ -167,7 +164,7 @@ func _process(delta: float) -> void:
 	#adjust_flicker()
 	
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	get_desired_direction()
 	
 	if has_proximity_aggro:

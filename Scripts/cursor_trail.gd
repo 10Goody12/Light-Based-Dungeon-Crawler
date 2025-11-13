@@ -9,9 +9,18 @@ var is_sparkling : bool = false
 
 @onready var lightsword = get_tree().get_first_node_in_group("LightSword")
 
-#func set_time_left(in_time):
-	#time_left = in_time
-	#max_lifetime = in_time
+var is_paused : bool = false
+
+func pause_trail():
+	is_paused = true
+	print("Drawing of the cursor trail has been paused!")
+
+func unpause_trail():
+	is_paused = false
+	print("Drawing of the cursor trail has been unpaused!")
+
+func wipe_trail():
+	points = []
 
 func set_max_line_points(in_num):
 	max_line_points = in_num
@@ -27,10 +36,13 @@ func draw_trail(in_end : Vector2, in_width, is_rainbow : bool = false, is_sparkl
 		if not is_rainbow:
 			gradient = null
 
-func _physics_process(delta: float) -> void:
-	draw_trail(lightsword.get_global_position(), 5.0, true, true, 50)
+func _physics_process(_delta: float) -> void:
+	if not is_paused:
+		draw_trail(lightsword.get_global_position(), 5.0, true, true, 50)
+	else:
+		print("Drawing of the cursor trail is paused, so the trail was not drawn.")
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#var alpha_per_second = 255 / max_lifetime
 	#if time_left <= 0:
 		#queue_free()
