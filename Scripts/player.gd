@@ -75,7 +75,7 @@ func check_health():
 	else:
 		return true
 
-func respawn_player(spawn_pos, starting_health):
+func respawn_player(starting_health, spawn_pos : Vector2 = Vector2(0.0, 0.0)):
 	print("Player respawned at ", spawn_pos, " with ", starting_health, " health points!")
 	global_position = spawn_pos
 	visible = true
@@ -125,7 +125,7 @@ func _physics_process(delta):
 		time_since_death += delta
 	
 	if is_dead and time_since_death >= respawn_cooldown:
-		respawn_player(last_checkpoint_coord, 100.0)
+		respawn_player(100.0, last_checkpoint_coord)
 	
 	time_since_last_hit += delta
 	if time_since_last_hit >= damage_cooldown:

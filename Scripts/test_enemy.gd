@@ -23,6 +23,7 @@ enum AggroState { PASSIVE, HOSTILE, PEACEFUL }
 @export var min_damage : float
 @export var max_damage : float
 @export_range(1, 15, 1.0) var damage_cooldown = 0.5
+@export_range(0, 1000.0, 10.0) var pushback_power : float = 100.0
 var damage_flicker_counter = 0.0
 
 @export_category("On Death")
@@ -48,15 +49,18 @@ var damage_flicker_counter = 0.0
 @export var guaranteed_drops : Dictionary
 
 @onready var player = get_tree().get_first_node_in_group("Player")
+@onready var cursor = get_tree().get_first_node_in_group("Cursor")
+
 #@onready var blood = $BloodParticles
 @onready var body = $AnimatedSprite2D
 
 var was_damaged : bool = false
+var is_stunned : bool = false
 var desired_direction_normalized
 
 signal death
 
-func get_desired_direction():
+func get_desired_direction(delta):
 	#var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	var noise : Vector2 = Vector2(randf_range(-random_amplitude, random_amplitude), randf_range(-random_amplitude, random_amplitude))
@@ -64,7 +68,10 @@ func get_desired_direction():
 	desired_direction_normalized = desired_dir.normalized()
 	#print(desired_direction_normalized)
 	
-	velocity = velocity.lerp(desired_dir.normalized() * enemy_speed if desired_dir != Vector2.ZERO else Vector2.ZERO, 0.1)
+	if not is_stunned:
+		velocity = velocity.lerp(desired_dir.normalized() * enemy_speed if desired_dir != Vector2.ZERO else Vector2.ZERO, 0.1)
+	else:
+		velocity = velocity.lerp(Vector2.ZERO, delta)
 
 func _on_death():
 	body.visible = false
@@ -86,7 +93,7 @@ func check_health():
 	else:
 		return true
 
-func inflict_damage(in_damage, was_crit, damage_type):
+func inflict_damage(in_damage, was_crit, damage_type, pushback_scale):
 	if was_damaged == false:
 		health -= in_damage
 		was_damaged = true
@@ -114,6 +121,10 @@ func inflict_damage(in_damage, was_crit, damage_type):
 		
 		if check_health():
 			Sound.play_random_hit(0.3)
+		
+		var cursor_rel_pos_norm = (Vector2(get_global_mouse_position() - global_position)).normalized()
+		velocity += -1 * cursor_rel_pos_norm * pushback_scale * pushback_power
+		print("Enemy named: ", self.name, " was pushed with a force of ", cursor_rel_pos_norm * pushback_scale * pushback_power, " away from the Lightsword!")
 
 func get_damage():
 	var out_damage = randf_range(min_damage, max_damage)
@@ -149,6 +160,7 @@ func play_correct_animation():
 
 func _process(delta: float) -> void:
 	if was_damaged:
+		is_stunned = true
 		damage_flicker_counter += delta
 		modulate = Color.RED
 		modulate.a = 0.5
@@ -157,6 +169,7 @@ func _process(delta: float) -> void:
 			was_damaged = false
 			damage_flicker_counter = 0
 	else:
+		is_stunned = false
 		modulate = modulate.lerp(Color.WHITE, delta * 5.0)
 		modulate.a += 1 / damage_cooldown
 	
@@ -165,7 +178,7 @@ func _process(delta: float) -> void:
 	
 
 func _physics_process(_delta):
-	get_desired_direction()
+	get_desired_direction(_delta)
 	
 	if has_proximity_aggro:
 		can_move = false

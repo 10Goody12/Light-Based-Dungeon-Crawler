@@ -33,6 +33,7 @@ func setup_shake(in_amplitude, in_damping, in_frequency, in_speed, in_cutoff, in
 	original_pos = parent_to_shake.position
 	
 	is_shaking = true
+	print("Shaking ", parent_to_shake.name, ".")
 
 func damped_func(in_x):
 	var a = amplitude
@@ -50,7 +51,6 @@ func damped_func(in_x):
 
 func _process(delta: float) -> void:
 	if is_shaking:
-		print("Shaking ", parent_to_shake.name, ".")
 		
 		x += delta * speed
 		#print(x)

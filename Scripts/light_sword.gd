@@ -196,10 +196,10 @@ func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 			var speed_multiplier = clampf((speed/750), 0.0, 1.5)
 			var output_damage = (speed_multiplier * damage) + damage
 			if speed_multiplier >= 1.5:
-				target.inflict_damage(output_damage, true, 0)
+				target.inflict_damage(output_damage, true, 0, 1.0)
 				#print("Critical hit!")
 			else:
-				target.inflict_damage(output_damage, false, 0)
+				target.inflict_damage(output_damage, false, 0, 1.0)
 		
 		#elif target.collision_layer & (1 << 0):
 			#print("Target is on layer 1 (Wall)")
