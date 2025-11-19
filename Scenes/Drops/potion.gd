@@ -19,7 +19,9 @@ var is_being_picked_up = false
 var picker_upper : Player
 
 func pickup(in_player : Player):
-	Sound.play("res://SFX/edited_coin_sound.wav", 20, 0.3)
+	#Sound.play("res://SFX/edited_coin_sound.wav", 20, 0.3)
+	Sound.play("res://SFX/PlayerNoises/player_heal.ogg", 20)
+	push_warning("Potion class is acting like the potions are used immediately on-pickup. Fix this later!")
 	is_being_picked_up = true
 	picker_upper = in_player
-	return potion_type_visual
+	return heal_amount

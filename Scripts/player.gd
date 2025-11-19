@@ -26,6 +26,7 @@ var last_incoming_enemy : Enemy
 
 signal was_injured
 signal money_collected(coin_type)
+signal was_healed(heal_amount)
 
 func _ready() -> void:
 	player_health = player_max_health
@@ -106,3 +107,7 @@ func _on_player_hitbox_area_entered(area: Area2D) -> void:
 			
 			#print("The player now has ", money, " units worth of value in copper coins.")
 			emit_signal("money_collected", coin_type)
+	
+	elif area.get_parent() is Potion:
+		var potion_heal_amount = area.get_parent().pickup(self)
+		emit_signal("was_healed", potion_heal_amount)
