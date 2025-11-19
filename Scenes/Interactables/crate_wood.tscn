@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://3jwds3pxvcsc"]
+
+[ext_resource type="Script" uid="uid://50sspsrmlk2u" path="res://crate_wood.gd" id="1_pajvo"]
+[ext_resource type="Texture2D" uid="uid://cmev2j14ol1sf" path="res://GFX/Interactables/wood_crate.png" id="2_51q7t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_51q7t"]
+size = Vector2(15, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pajvo"]
+size = Vector2(15, 15)
+
+[node name="CrateWood" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_pajvo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_51q7t")
+
+[node name="CrateSprite" type="Sprite2D" parent="."]
+self_modulate = Color(0.504184, 0.330945, 0.155834, 1)
+texture = ExtResource("2_51q7t")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 5
+
+[node name="HitboxShape" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("RectangleShape2D_pajvo")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

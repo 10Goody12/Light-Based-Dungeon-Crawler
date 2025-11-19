@@ -8,6 +8,7 @@ func create(in_node):
 		if node is Shaker:
 			print("There was a prior shaker. Not creating one.")
 			should_proceed = false
+			return null
 	
 	if should_proceed:
 		print("A shaker was made for a node called ", in_node.name)

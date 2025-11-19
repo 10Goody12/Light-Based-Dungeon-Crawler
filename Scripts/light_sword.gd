@@ -192,7 +192,10 @@ func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 	
 	if is_lightsword_enabled:
 		var speed = data[0]
-		if target is Enemy:
+		
+		print(target.get_class())
+		
+		if (target is Enemy) or (target is CrateWood):
 			var speed_multiplier = clampf((speed/750), 0.0, 1.5)
 			var output_damage = (speed_multiplier * damage) + damage
 			if speed_multiplier >= 1.5:

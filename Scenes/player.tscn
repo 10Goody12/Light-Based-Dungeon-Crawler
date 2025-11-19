@@ -67,6 +67,7 @@ _data = {
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 collision_layer = 2
+collision_mask = 9
 motion_mode = 1
 script = ExtResource("1_onrkg")
 

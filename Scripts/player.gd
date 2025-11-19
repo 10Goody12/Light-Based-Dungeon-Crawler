@@ -151,7 +151,8 @@ func _on_player_hitbox_area_entered(area: Area2D) -> void:
 				emit_signal("was_injured", damage_dealt)
 				
 				var new_shaker = ShakeManager.create(body)
-				new_shaker.setup_shake(2, 2, 25, 2, 1, false, 0)
+				if new_shaker:
+					new_shaker.setup_shake(2, 2, 25, 2, 1, false, 0)
 				
 				var blood_scene: PackedScene = load("res://Scenes/CursorCombat/blood_particles.tscn")
 				var blood_particles = blood_scene.instantiate()

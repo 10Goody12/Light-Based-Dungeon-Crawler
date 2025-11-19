@@ -13,7 +13,8 @@ func subtract_health(in_damage):
 	$NinePatchRect/TextureProgressBar/Control/HealthDropParticles.emitting = true
 	
 	var new_shaker = ShakeManager.create(self)
-	new_shaker.setup_shake(25, 2, 25, 2, 1, false, 0)
+	if new_shaker:
+		new_shaker.setup_shake(25, 2, 25, 2, 1, false, 0)
 	
 	var damage_counter_scene: PackedScene = load("res://Scenes/CursorCombat/damage_counter.tscn")
 	var damage_counter = damage_counter_scene.instantiate()
