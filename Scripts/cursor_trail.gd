@@ -20,6 +20,7 @@ func unpause_trail():
 	print("Drawing of the cursor trail has been unpaused!")
 
 func wipe_trail():
+	print("Cursor trail wiped!")
 	points = []
 
 func set_max_line_points(in_num):

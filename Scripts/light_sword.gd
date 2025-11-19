@@ -16,6 +16,7 @@ var data
 var cursor_speed
 var direction_angle
 
+var is_lightsword_enabled : bool = true
 var is_mouse_inside : bool = true
 
 #func _ready() -> void:
@@ -75,6 +76,20 @@ func check_for_objects_slashed(last_pos, current_pos):
 		#if collider.get_parent() is Enemy:
 			#collider.get_parent().inflict_damage(output_damage)
 
+func disable():
+	print("Lightsword disabled.")
+	visible = false
+	trail.visible = false
+	
+	is_lightsword_enabled = false
+
+func enable():
+	print("Lightsword enabled.")
+	visible = true
+	trail.wipe_trail()
+	trail.visible = true
+	
+	is_lightsword_enabled = true
 
 func _notification(what):
 	if what == NOTIFICATION_WM_MOUSE_EXIT:
@@ -131,9 +146,11 @@ func _process(delta: float) -> void:
 	
 	#draw_line_from_to(last_pos, position, 100.0, 1.0)
 	#lightsword.draw_trail(position, 5, true, true, 50)
-	star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor + Vector2(0.2, 0.2)
-	#star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
-	light.energy = data[0] / 500
+	
+	if is_lightsword_enabled:
+		star.scale = (Vector2(data[0], data[0]) / 500) * star.scale_factor + Vector2(0.2, 0.2)
+		#star_2.scale = (Vector2(data[0], data[0]) / 500) * star_2.scale_factor
+		light.energy = data[0] / 500
 	
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(last_pos, get_global_mouse_position())
@@ -172,18 +189,20 @@ func _process(delta: float) -> void:
 
 func _on_collision_hitbox_body_entered(target: Node2D) -> void:
 	#print("Collision detected between the cursor and: ", str(body))
-	var speed = data[0]
-	if target is Enemy:
-		var speed_multiplier = clampf((speed/750), 0.0, 1.5)
-		var output_damage = (speed_multiplier * damage) + damage
-		if speed_multiplier >= 1.5:
-			target.inflict_damage(output_damage, true, 0)
-			#print("Critical hit!")
-		else:
-			target.inflict_damage(output_damage, false, 0)
 	
-	elif target.collision_layer & (1 << 0):
-		print("Target is on layer 1 (Wall)")
-	
-	elif target.physics_layer_0 & (1 << 0):
-		print("Target is on layer 1 (Wall)")
+	if is_lightsword_enabled:
+		var speed = data[0]
+		if target is Enemy:
+			var speed_multiplier = clampf((speed/750), 0.0, 1.5)
+			var output_damage = (speed_multiplier * damage) + damage
+			if speed_multiplier >= 1.5:
+				target.inflict_damage(output_damage, true, 0)
+				#print("Critical hit!")
+			else:
+				target.inflict_damage(output_damage, false, 0)
+		
+		#elif target.collision_layer & (1 << 0):
+			#print("Target is on layer 1 (Wall)")
+		#
+		#elif target.physics_layer_0 & (1 << 0):
+			#print("Target is on layer 1 (Wall)")

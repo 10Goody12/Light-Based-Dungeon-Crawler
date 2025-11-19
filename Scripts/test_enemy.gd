@@ -67,6 +67,7 @@ func get_desired_direction():
 	velocity = velocity.lerp(desired_dir.normalized() * enemy_speed if desired_dir != Vector2.ZERO else Vector2.ZERO, 0.1)
 
 func _on_death():
+	body.visible = false
 	var coin_scene = load("res://Scenes/Drops/coin.tscn")
 	var new_coin = coin_scene.instantiate()
 	new_coin.position = position
@@ -79,7 +80,6 @@ func _on_death():
 
 func check_health():
 	if health <= 0:
-		body.visible = false
 		emit_signal("death")
 		queue_free()
 		return false

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2erbx3fp32gi"]
+
+[ext_resource type="Script" uid="uid://c7pwc6dg5s3he" path="res://Scenes/checkpoint_area.gd" id="1_ruenk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stfyx"]
+
+[node name="CheckpointArea" type="Area2D"]
+script = ExtResource("1_ruenk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_stfyx")
+
+[connection signal="area_entered" from="." to="." method="_on_checkpoint_entered"]

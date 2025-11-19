@@ -128,4 +128,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_fkybt")
 }
 
+[connection signal="player_died" from="." to="." method="_on_player_died"]
 [connection signal="area_entered" from="PlayerHitBox" to="." method="_on_player_hitbox_area_entered"]

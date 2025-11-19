@@ -50,10 +50,10 @@ func damped_func(in_x):
 
 func _process(delta: float) -> void:
 	if is_shaking:
-		print("Shaking")
+		print("Shaking ", parent_to_shake.name, ".")
 		
 		x += delta * speed
-		print(x)
+		#print(x)
 	
 		if axis == Axes.X_AXIS:
 			parent_to_shake.position.x = original_pos.x + damped_func(x)
@@ -62,5 +62,5 @@ func _process(delta: float) -> void:
 		
 		if damped_func(x) == 0:
 			is_shaking = false
-			print("Done shaking")
+			print(parent_to_shake.name, " is done shaking.")
 			queue_free()

@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 		pass
 	else:
 		container.position = container.position.lerp(start_position + Vector2(0, - float_height), delta * float_speed)
-		modulate.a -= delta * 0.1
+		modulate.a -= delta
 		#label.add_theme_font_size_override("normal_font_size", font_size - (font_size_decay * float_counter))
 		label.scale = label.scale.lerp(Vector2(0,0), font_size_decay * delta)
 		#label.position.x += float(font_size_decay * delta)

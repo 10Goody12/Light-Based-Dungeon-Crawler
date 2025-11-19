@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://b0krc5mdf61qj"]
+[gd_scene load_steps=6 format=4 uid="uid://b0krc5mdf61qj"]
 
 [ext_resource type="TileSet" uid="uid://bsvypsc1xhb0i" path="res://Resources/Tilesets/cave_tileset.tres" id="1_iqce5"]
 [ext_resource type="PackedScene" uid="uid://di5tp45e4jtvh" path="res://Scenes/test_enemy.tscn" id="2_qtyu6"]
 [ext_resource type="PackedScene" uid="uid://csx4w6s4cup36" path="res://Scenes/Drops/coin.tscn" id="3_er131"]
 [ext_resource type="PackedScene" uid="uid://cjakhjmwul4k8" path="res://Scenes/Drops/potion.tscn" id="4_isyir"]
+[ext_resource type="PackedScene" uid="uid://b2erbx3fp32gi" path="res://Scenes/checkpoint_area.tscn" id="5_ky5eb"]
 
 [node name="Start_Map_1" type="TileMapLayer"]
 z_index = -5
@@ -118,3 +119,6 @@ position = Vector2(47, 39)
 
 [node name="Potion" parent="." instance=ExtResource("4_isyir")]
 position = Vector2(131, 31)
+
+[node name="CheckpointArea" parent="." instance=ExtResource("5_ky5eb")]
+position = Vector2(-52, 56)

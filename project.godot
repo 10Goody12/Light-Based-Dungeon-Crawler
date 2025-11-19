@@ -21,6 +21,7 @@ LightSword="*res://Scripts/light_sword.gd"
 Sound="*res://Scripts/sound.gd"
 ShakeManager="*res://Scripts/shake_manager.gd"
 Init="*res://init.gd"
+PlayerManager="*res://player_manager.gd"
 
 [file_customization]
 
