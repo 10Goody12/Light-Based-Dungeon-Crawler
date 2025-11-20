@@ -17,10 +17,16 @@ func break_crate():
 	new_coin.position = position
 	new_coin.name = "Coin"
 	
+	var crate_particles_scene = load("res://Scenes/CursorCombat/crate_particles.tscn")
+	var crate_particles = crate_particles_scene.instantiate()
+	crate_particles.position = position
+	crate_particles.name = "CrateParticles"
+	
 	get_tree().get_root().call_deferred("add_child", new_coin)
+	get_tree().get_root().call_deferred("add_child", crate_particles)
 	
 	Sound.play_random_hit(0.3)
-	Sound.play_death_sound(0) # Splat sound
+	Sound.play_death_sound(1, 20, 0.25) # Crate sound
 	queue_free()
 
 func check_health():

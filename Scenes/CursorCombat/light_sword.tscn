@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c3hgkchts2drf" path="res://Scripts/cursor_sparkle.gd" id="2_1jnj3"]
 [ext_resource type="Texture2D" uid="uid://dw42ffso2ppcu" path="res://GFX/Cursor/sword_sprite_5.png" id="2_7n8p5"]
 [ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/CursorCombat/cursor_trail.tscn" id="4_6v1wn"]
+[ext_resource type="Curve" uid="uid://ko7j031dnwu0" path="res://Resources/Curves/light_sword_particle_spin_curve.tres" id="4_d78q3"]
 
 [sub_resource type="Gradient" id="Gradient_7n8p5"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -17,13 +18,6 @@ fill_to = Vector2(1, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjwkt"]
 radius = 5.0
-
-[sub_resource type="Curve" id="Curve_6v1wn"]
-_limits = [-1.0, 1.0, 0.0, 1.0]
-_data = [Vector2(0, -1), 0.0, 2.0, 0, 1, Vector2(1, 1), 2.0, 0.0, 1, 0]
-point_count = 2
-metadata/_snap_enabled = true
-metadata/_snap_count = 2
 
 [sub_resource type="Curve" id="Curve_arakq"]
 _data = [Vector2(0, 0.617978), 0.0, 0.0, 0, 0, Vector2(0.159091, 0.786517), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -96,7 +90,7 @@ gravity = Vector2(0, 0)
 initial_velocity_max = 5.0
 angle_min = -180.0
 angle_max = 180.0
-angle_curve = SubResource("Curve_6v1wn")
+angle_curve = ExtResource("4_d78q3")
 scale_amount_min = 0.05
 scale_amount_max = 0.4
 scale_amount_curve = SubResource("Curve_arakq")

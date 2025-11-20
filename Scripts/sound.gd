@@ -37,7 +37,10 @@ func play_random_hit(random_amplitude = 0.0):
 	else:
 		print("No hit sounds found to play!")
 
-func play_death_sound(in_type):
+func play_death_sound(in_type, decibel_offset, random_amp):
 	if in_type == 0:
 		# Splat
-		play("res://SFX/DeathNoises/splat_death.wav", 30.0, 0.5)
+		play("res://SFX/DeathNoises/splat_death.wav", decibel_offset, random_amp)
+	
+	elif in_type == 1:
+		play("res://SFX/Combat/crate_break_wood.ogg", decibel_offset, random_amp)

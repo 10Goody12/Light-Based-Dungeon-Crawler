@@ -116,7 +116,7 @@ position = Vector2(479, -141)
 default_state = 1
 
 [node name="Coin" parent="." instance=ExtResource("3_er131")]
-position = Vector2(47, 39)
+position = Vector2(-40, 7)
 
 [node name="Potion" parent="." instance=ExtResource("4_isyir")]
 position = Vector2(131, 31)
@@ -126,3 +126,12 @@ position = Vector2(-52, 56)
 
 [node name="CrateWood" parent="." instance=ExtResource("6_popnp")]
 position = Vector2(23, 76)
+
+[node name="CrateWood2" parent="." instance=ExtResource("6_popnp")]
+position = Vector2(100, 49)
+
+[node name="CrateWood3" parent="." instance=ExtResource("6_popnp")]
+position = Vector2(77, 54)
+
+[node name="CrateWood4" parent="." instance=ExtResource("6_popnp")]
+position = Vector2(52, 68)

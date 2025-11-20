@@ -103,7 +103,7 @@ func _on_player_died(last_position: Variant) -> void:
 	
 	PlayerManager.freeze_player(self)
 	PlayerManager.disable_lightsword(self)
-	Sound.play_death_sound(0) # Splat sound
+	Sound.play_death_sound(0, 30.0, 0.5) # Splat sound
 
 func _physics_process(delta):
 	#if is_frozen:

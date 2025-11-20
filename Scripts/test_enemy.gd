@@ -83,7 +83,7 @@ func _on_death():
 	get_tree().get_root().call_deferred("add_child", new_coin)
 	
 	Sound.play_random_hit(0.3)
-	Sound.play_death_sound(0) # Splat sound
+	Sound.play_death_sound(0, 30.0, 0.5) # Splat sound
 
 func check_health():
 	if health <= 0:
