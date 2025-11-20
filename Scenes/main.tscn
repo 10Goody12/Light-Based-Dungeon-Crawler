@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://buui0u2alvorg"]
 
 [ext_resource type="PackedScene" uid="uid://03mje5tgwt70" path="res://Scenes/GUI/gui.tscn" id="1_21xkr"]
+[ext_resource type="PackedScene" uid="uid://dc5bpa0ys1un1" path="res://MapChunks/StartAreas/start_map_2.tscn" id="2_21xkr"]
 [ext_resource type="PackedScene" uid="uid://bo75o5ohak2e7" path="res://Scenes/player.tscn" id="2_kry3j"]
 [ext_resource type="PackedScene" uid="uid://be763vwsw412y" path="res://Scenes/CursorCombat/light_sword.tscn" id="4_6bp64"]
 [ext_resource type="PackedScene" uid="uid://bmhaee122k4nu" path="res://Scenes/CursorCombat/cursor_trail.tscn" id="5_kry3j"]
-[ext_resource type="PackedScene" uid="uid://b0krc5mdf61qj" path="res://MapChunks/StartAreas/start_map_1.tscn" id="6_21xkr"]
 
 [sub_resource type="Curve" id="Curve_kry3j"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.632979, 0.224719), 0.0, 0.0, 0, 0, Vector2(1, 0.651685), 0.391178, 0.0, 0, 0]
@@ -19,10 +19,10 @@ y_sort_enabled = true
 
 [node name="GUI" parent="." instance=ExtResource("1_21xkr")]
 
-[node name="Start_Map_1" parent="." instance=ExtResource("6_21xkr")]
-metadata/_edit_lock_ = true
+[node name="Start_Map_2" parent="." instance=ExtResource("2_21xkr")]
 
 [node name="Player" parent="." instance=ExtResource("2_kry3j")]
+z_index = 1
 z_as_relative = false
 y_sort_enabled = true
 
@@ -35,7 +35,6 @@ metadata/_edit_lock_ = true
 [node name="Darkness" type="DirectionalLight2D" parent="."]
 z_index = 5
 color = Color(0, 0, 0, 1)
-energy = 0.85
 blend_mode = 2
 shadow_item_cull_mask = 0
 

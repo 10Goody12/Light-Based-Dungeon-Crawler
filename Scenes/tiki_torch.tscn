@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://dav2p4kw0t7x7"]
+
+[ext_resource type="Texture2D" uid="uid://h8ltxndmgx0t" path="res://GFX/flame_1_spritesheet.png" id="1_bwmsw"]
+[ext_resource type="Script" uid="uid://cqbt8w1l2pngh" path="res://Scenes/tiki_torch.gd" id="1_yu4d5"]
+[ext_resource type="Texture2D" uid="uid://bemfr4j6wj6jb" path="res://GFX/flame_pan.png" id="2_yu4d5"]
+[ext_resource type="Texture2D" uid="uid://bonxdidiw4ojx" path="res://GFX/shadow.png" id="3_pesul"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0sdl"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ornib"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xjhi"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvgxq"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvhwb"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7eij"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4lpy"]
+atlas = ExtResource("1_bwmsw")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_je66q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0sdl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ornib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xjhi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvgxq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvhwb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7eij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4lpy")
+}],
+"loop": true,
+"name": &"on",
+"speed": 12.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_yu4d5"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pesul"]
+gradient = SubResource("Gradient_yu4d5")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[node name="TikiTorch" type="Node2D"]
+z_index = 2
+script = ExtResource("1_yu4d5")
+flame_colour = Color(1, 1, 1, 1)
+flicker_time = 5.0
+flicker_amplitude = 24.0
+
+[node name="Flame" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(0, -5)
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_je66q")
+animation = &"on"
+frame_progress = 0.0300575
+
+[node name="Flamepan" type="Sprite2D" parent="."]
+texture = ExtResource("2_yu4d5")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.35)
+z_index = -1
+position = Vector2(1.19209e-07, 7)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_pesul")
+
+[node name="Flamelight" type="PointLight2D" parent="."]
+position = Vector2(0, -4)
+energy = 2.0
+blend_mode = 2
+texture = SubResource("GradientTexture2D_pesul")
+texture_scale = 2.0

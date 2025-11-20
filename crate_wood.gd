@@ -9,20 +9,27 @@ var was_damaged = false
 var time_since_last_damage = 0.0
 @export var damage_cooldown = 0.5
 
+@export_category("Loot")
+@export var drops_coins : bool = true
+
 func break_crate():
 	sprite.visible = false
+	var new_coin
 	
-	var coin_scene = load("res://Scenes/Drops/coin.tscn")
-	var new_coin = coin_scene.instantiate()
-	new_coin.position = position
-	new_coin.name = "Coin"
+	if drops_coins:
+		var coin_scene = load("res://Scenes/Drops/coin.tscn")
+		new_coin = coin_scene.instantiate()
+		new_coin.position = position
+		new_coin.name = "Coin"
 	
 	var crate_particles_scene = load("res://Scenes/CursorCombat/crate_particles.tscn")
 	var crate_particles = crate_particles_scene.instantiate()
 	crate_particles.position = position
 	crate_particles.name = "CrateParticles"
 	
-	get_tree().get_root().call_deferred("add_child", new_coin)
+	if drops_coins:
+		get_tree().get_root().call_deferred("add_child", new_coin)
+	
 	get_tree().get_root().call_deferred("add_child", crate_particles)
 	
 	Sound.play_random_hit(0.3)
